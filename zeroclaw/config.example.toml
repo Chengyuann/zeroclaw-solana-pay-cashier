@@ -1,0 +1,16 @@
+[skills]
+allow_scripts = false
+
+[sop]
+sops_dir = "zeroclaw/sops"
+maintenance_interval_secs = 60
+persist_runs = true
+execution_mode = "supervised"
+
+[runtime_profiles.cashier.tool_receipts]
+enabled = true
+inject_system_prompt = true
+show_in_response = true
+
+# Configure a real owner-facing channel through `zeroclaw quickstart`.
+# The stock CLI channel is sufficient for local reproduction.

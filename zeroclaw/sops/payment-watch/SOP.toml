@@ -1,0 +1,16 @@
+[sop]
+name = "payment-watch"
+description = "Poll pending Solana Pay invoices and surface newly validated receipts."
+version = "0.1.0"
+priority = "normal"
+execution_mode = "supervised"
+cooldown_secs = 30
+max_concurrent = 1
+admission_policy = "coalesce"
+
+[[triggers]]
+type = "cron"
+expression = "* * * * *"
+
+[[triggers]]
+type = "manual"

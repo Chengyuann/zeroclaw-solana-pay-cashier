@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.state/
+.tools/
+.zeroclaw-config/
+.zeroclaw-live/
+evidence/
+rpc-relay/
+rpc-relay-pages/
+coverage/
+*.log

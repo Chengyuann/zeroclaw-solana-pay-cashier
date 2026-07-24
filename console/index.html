@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Proof-Carrying Cashier</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Proof-Carrying Cashier</h1>
+        <p>Solana Pay reconciliation with issuer attestations and RPC witnesses</p>
+      </div>
+      <div class="status-block">
+        <span class="live-dot"></span>
+        <span id="generated-at">Loading ledger</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="metrics" aria-label="Ledger summary">
+        <div><strong id="metric-total">0</strong><span>Total</span></div>
+        <div><strong id="metric-pending">0</strong><span>Pending</span></div>
+        <div><strong id="metric-paid">0</strong><span>Paid</span></div>
+        <div><strong id="metric-attention">0</strong><span>Attention</span></div>
+      </section>
+
+      <section class="toolbar">
+        <div class="segments" role="tablist" aria-label="Invoice filter">
+          <button class="segment active" data-filter="all">All</button>
+          <button class="segment" data-filter="pending">Pending</button>
+          <button class="segment" data-filter="paid">Paid</button>
+          <button class="segment" data-filter="attention">Attention</button>
+        </div>
+        <button id="refresh" class="icon-button" title="Refresh ledger" aria-label="Refresh ledger">
+          ↻
+        </button>
+      </section>
+
+      <section class="ledger">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Payment ID</th>
+                <th>Proof</th>
+                <th>Witness</th>
+              </tr>
+            </thead>
+            <tbody id="invoice-rows"></tbody>
+          </table>
+        </div>
+        <aside id="detail" class="detail">
+          <div class="empty-detail">
+            <span>Select an invoice to inspect its proof bundle.</span>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
