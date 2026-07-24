@@ -146,6 +146,17 @@ export SOLANA_DEVNET_RPC_URL=https://your-solana-devnet-rpc.example
 
 Mainnet can likewise be overridden with `SOLANA_MAINNET_RPC_URL`.
 
+The optional devnet payer uses a separate faucet RPC because many public read
+RPCs disable `requestAirdrop`:
+
+```bash
+export SOLANA_DEVNET_FAUCET_RPC_URL=https://api.devnet.solana.com
+npm run devnet -- airdrop 1
+```
+
+On managed networks where the official faucet is blocked, use a browser faucet
+to fund the temporary `.state/devnet-payer.json` address instead.
+
 ## Refund workflow
 
 Create a request:

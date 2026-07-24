@@ -4,14 +4,10 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import {
-  address,
   createKeyPairSignerFromBytes,
   createSolanaRpc,
-  createSolanaRpcSubscriptions,
   devnet,
   generateKeyPairSigner,
-  getBase58Decoder,
-  getBase58Encoder,
   getSignatureFromTransaction,
   lamports,
   writeKeyPairSigner,
@@ -95,7 +91,12 @@ async function requestAirdrop(sol: number): Promise<void> {
     throw new Error("airdrop amount must be greater than 0 and at most 2 SOL");
   }
   const signer = await loadSigner();
-  const rpc = createRpc();
+  const rpc = createSolanaRpc(
+    devnet(
+      process.env.SOLANA_DEVNET_FAUCET_RPC_URL ??
+        "https://api.devnet.solana.com",
+    ),
+  );
   const amount = lamports(BigInt(Math.round(sol * 1_000_000_000)));
   const signature = await rpc.requestAirdrop(signer.address, amount).send();
   output({
