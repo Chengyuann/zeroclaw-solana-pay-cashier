@@ -4,6 +4,7 @@ dist/
 .tools/
 .zeroclaw-config/
 .zeroclaw-live/
+.agent/
 evidence/
 rpc-relay/
 rpc-relay-pages/
