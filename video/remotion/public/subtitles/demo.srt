@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:08,160
+A payment link is easy. Reconciliation is not. Merchants need proof of what was requested, what settled, and which exceptions still need attention.
+
+2
+00:00:08,610 --> 00:00:17,410
+The merchant asks ZeroClaw to charge an order. A supervised tool call creates the invoice, while the agent holds no wallet key and cannot move funds.
+
+3
+00:00:17,860 --> 00:00:28,900
+Each invoice gets a payment identifier, expiry, unique Solana Pay reference, canonical offer hash, and a non-funds Ed25519 issuer attestation.
+
+4
+00:00:29,350 --> 00:00:39,910
+This is not the simulation path. An ephemeral payer signs a zero point zero zero one SOL transfer on a fresh Agave validator, with the exact recipient, memo, and reference.
+
+5
+00:00:40,360 --> 00:00:50,440
+The cashier validates the transfer, records the witness evidence, signs the settlement hash, and exports a bundle that verifies offline. The result is accepted with no anomalies.
+
+6
+00:00:50,890 --> 00:01:02,090
+Late, duplicate, underpaid, overpaid, invalid, or disputed payments enter an attention queue. Refunds require owner approval. The final boundary remains T1: the human wallet signs.
+
+7
+00:01:02,540 --> 00:01:12,940
+Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.

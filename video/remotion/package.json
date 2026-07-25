@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "studio": "remotion studio --no-open",
+    "render": "remotion render src/index.ts DemoVideo out/final.mp4",
+    "still": "remotion still src/index.ts DemoVideo out/still.png --frame=0",
+    "qa:encoded-scenes": "python3 scripts/qa_encoded_scenes.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/media": "4.0.495",
+    "@remotion/transitions": "4.0.495",
+    "remotion": "4.0.495",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@remotion/cli": "4.0.495",
+    "@types/react": "19.2.14",
+    "typescript": "5.9.3"
+  }
+}

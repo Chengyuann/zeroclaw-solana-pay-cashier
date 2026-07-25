@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration_seconds": 73.39,
+  "duration_frames": 2202,
+  "audio_mix": "public/audio/voiceover-mix.wav",
+  "scenes": [
+    {
+      "id": "01-problem",
+      "title": "The missing layer",
+      "start_seconds": 0.0,
+      "end_seconds": 8.61,
+      "duration_seconds": 8.61,
+      "start_frame": 0,
+      "duration_frames": 258,
+      "voiceover": "A payment link is easy. Reconciliation is not. Merchants need proof of what was requested, what settled, and which exceptions still need attention.",
+      "audio": "public/audio/01-problem.wav",
+      "audio_duration_seconds": 8.16,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "A payment link is easy. Reconciliation is not. Merchants need proof of what was requested, what settled, and which exceptions still need attention.",
+          "start_seconds": 0.0,
+          "end_seconds": 8.16
+        }
+      ],
+      "visual": {
+        "kind": "problem",
+        "intent": "From payment link to auditable settlement"
+      }
+    },
+    {
+      "id": "02-zeroclaw",
+      "title": "Supervised ZeroClaw",
+      "start_seconds": 8.61,
+      "end_seconds": 17.86,
+      "duration_seconds": 9.25,
+      "start_frame": 258,
+      "duration_frames": 278,
+      "voiceover": "The merchant asks ZeroClaw to charge an order. A supervised tool call creates the invoice, while the agent holds no wallet key and cannot move funds.",
+      "audio": "public/audio/02-zeroclaw.wav",
+      "audio_duration_seconds": 8.8,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "The merchant asks ZeroClaw to charge an order. A supervised tool call creates the invoice, while the agent holds no wallet key and cannot move funds.",
+          "start_seconds": 8.61,
+          "end_seconds": 17.41
+        }
+      ],
+      "visual": {
+        "kind": "agent",
+        "intent": "One approved tool call. Zero custody."
+      }
+    },
+    {
+      "id": "03-offer",
+      "title": "A signed offer",
+      "start_seconds": 17.86,
+      "end_seconds": 29.35,
+      "duration_seconds": 11.49,
+      "start_frame": 536,
+      "duration_frames": 344,
+      "voiceover": "Each invoice gets a payment identifier, expiry, unique Solana Pay reference, canonical offer hash, and a non-funds Ed25519 issuer attestation.",
+      "audio": "public/audio/03-offer.wav",
+      "audio_duration_seconds": 11.04,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "Each invoice gets a payment identifier, expiry, unique Solana Pay reference, canonical offer hash, and a non-funds Ed25519 issuer attestation.",
+          "start_seconds": 17.86,
+          "end_seconds": 28.9
+        }
+      ],
+      "visual": {
+        "kind": "offer",
+        "intent": "Immutable terms before payment"
+      }
+    },
+    {
+      "id": "04-transaction",
+      "title": "Real Solana execution",
+      "start_seconds": 29.35,
+      "end_seconds": 40.36,
+      "duration_seconds": 11.01,
+      "start_frame": 880,
+      "duration_frames": 331,
+      "voiceover": "This is not the simulation path. An ephemeral payer signs a zero point zero zero one SOL transfer on a fresh Agave validator, with the exact recipient, memo, and reference.",
+      "audio": "public/audio/04-transaction.wav",
+      "audio_duration_seconds": 10.56,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "This is not the simulation path. An ephemeral payer signs a zero point zero zero one SOL transfer on a fresh Agave validator, with the exact recipient, memo, and reference.",
+          "start_seconds": 29.349999999999998,
+          "end_seconds": 39.91
+        }
+      ],
+      "visual": {
+        "kind": "transaction",
+        "intent": "Signed transaction. Confirmed slot. No error."
+      }
+    },
+    {
+      "id": "05-proof",
+      "title": "Proof that travels",
+      "start_seconds": 40.36,
+      "end_seconds": 50.89,
+      "duration_seconds": 10.53,
+      "start_frame": 1211,
+      "duration_frames": 316,
+      "voiceover": "The cashier validates the transfer, records the witness evidence, signs the settlement hash, and exports a bundle that verifies offline. The result is accepted with no anomalies.",
+      "audio": "public/audio/05-proof.wav",
+      "audio_duration_seconds": 10.08,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "The cashier validates the transfer, records the witness evidence, signs the settlement hash, and exports a bundle that verifies offline. The result is accepted with no anomalies.",
+          "start_seconds": 40.36,
+          "end_seconds": 50.44
+        }
+      ],
+      "visual": {
+        "kind": "proof",
+        "intent": "Offer hash, proof hash, issuer key, offline verification",
+        "asset_refs": [
+          "assets/proof-console.jpg"
+        ]
+      }
+    },
+    {
+      "id": "06-safety",
+      "title": "Fail closed",
+      "start_seconds": 50.89,
+      "end_seconds": 62.54,
+      "duration_seconds": 11.65,
+      "start_frame": 1527,
+      "duration_frames": 349,
+      "voiceover": "Late, duplicate, underpaid, overpaid, invalid, or disputed payments enter an attention queue. Refunds require owner approval. The final boundary remains T1: the human wallet signs.",
+      "audio": "public/audio/06-safety.wav",
+      "audio_duration_seconds": 11.2,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "Late, duplicate, underpaid, overpaid, invalid, or disputed payments enter an attention queue. Refunds require owner approval. The final boundary remains T1: the human wallet signs.",
+          "start_seconds": 50.89,
+          "end_seconds": 62.09
+        }
+      ],
+      "visual": {
+        "kind": "safety",
+        "intent": "Exceptions surface. Funds stay human-controlled."
+      }
+    },
+    {
+      "id": "07-close",
+      "title": "Reproducible",
+      "start_seconds": 62.54,
+      "end_seconds": 73.39,
+      "duration_seconds": 10.85,
+      "start_frame": 1876,
+      "duration_frames": 326,
+      "voiceover": "Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.",
+      "audio": "public/audio/07-close.wav",
+      "audio_duration_seconds": 10.4,
+      "padding_after_seconds": 0.45,
+      "captions": [
+        {
+          "text": "Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.",
+          "start_seconds": 62.54,
+          "end_seconds": 72.94
+        }
+      ],
+      "visual": {
+        "kind": "close",
+        "intent": "12 tests. Signed proof. T1 custody."
+      }
+    }
+  ]
+}

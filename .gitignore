@@ -10,3 +10,10 @@ rpc-relay/
 rpc-relay-pages/
 coverage/
 *.log
+outputs/
+video/remotion/node_modules/
+video/remotion/out/
+video/remotion/outputs/
+video/remotion/qa/
+video/remotion/public/audio/
+video/assets/

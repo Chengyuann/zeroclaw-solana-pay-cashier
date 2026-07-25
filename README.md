@@ -7,6 +7,9 @@ witnesses, and the owner receives a tamper-evident receipt or an exception.
 
 The agent never holds a private key and never signs a transaction.
 
+The formal 73-second showcase and its QA package are published on the GitHub
+Release page. Remotion source and the storyboard live under [`video/`](video/).
+
 ## Why this exists
 
 Small merchants can accept Solana payments without running a custody service or trusting an LLM with a wallet key. ZeroClaw handles the conversational workflow while Solana Pay provides the standardized payment request.

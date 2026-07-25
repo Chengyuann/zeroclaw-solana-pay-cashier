@@ -1,0 +1,8 @@
+{
+  "title": "Proof-Carrying Cashier",
+  "audience": "ZeroClaw and Solana bounty judges",
+  "goal": "Prove a safe, reproducible merchant payment workflow with real signed Solana execution",
+  "format": "1920x1080, 30fps, under 3 minutes",
+  "evidence_level": "Signed Agave local-validator transaction, explicitly not public devnet",
+  "custody_tier": "T1"
+}

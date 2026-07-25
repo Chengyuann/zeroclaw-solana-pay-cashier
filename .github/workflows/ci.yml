@@ -32,9 +32,12 @@ jobs:
           curl -fL \
             https://github.com/zeroclaw-labs/zeroclaw/releases/download/v0.8.3/zeroclaw-x86_64-unknown-linux-gnu.tar.gz \
             -o /tmp/zeroclaw.tar.gz
+          mkdir -p /tmp/zeroclaw-release
           mkdir -p "$HOME/.local/bin"
-          tar -xzf /tmp/zeroclaw.tar.gz -C /tmp
-          find /tmp -type f -name zeroclaw -perm -111 -exec cp {} "$HOME/.local/bin/zeroclaw" \;
+          tar -xzf /tmp/zeroclaw.tar.gz -C /tmp/zeroclaw-release
+          find /tmp/zeroclaw-release -type f -name zeroclaw -perm -111 \
+            -exec cp {} "$HOME/.local/bin/zeroclaw" \;
+          test -x "$HOME/.local/bin/zeroclaw"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Audit ZeroClaw skill
