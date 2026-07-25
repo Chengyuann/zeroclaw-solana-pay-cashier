@@ -12,13 +12,21 @@ on:
         required: true
         default: "1"
         type: string
+      runner:
+        description: GitHub runner network pool
+        required: true
+        default: macos-latest
+        type: choice
+        options:
+          - macos-latest
+          - ubuntu-latest
 
 permissions:
   contents: read
 
 jobs:
   airdrop:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
     steps:
       - name: Validate input
         env:
