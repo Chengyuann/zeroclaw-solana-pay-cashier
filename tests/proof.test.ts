@@ -50,6 +50,25 @@ describe("proof-carrying settlement", () => {
     });
   });
 
+  it("accepts one explicit local-validator witness", () => {
+    const result = assessSettlement({
+      expectedAmount: 1,
+      observedAmount: 1,
+      signatureCount: 1,
+      primaryValid: true,
+      paidAt: "2026-07-25T00:00:00.000Z",
+      expiresAt: "2026-07-25T00:10:00.000Z",
+      witnesses: [baseWitness],
+      requiredWitnesses: 1,
+    });
+    expect(result.outcome).toBe("accepted");
+    expect(result.witnessQuorum).toEqual({
+      required: 1,
+      valid: 1,
+      agreed: true,
+    });
+  });
+
   it("surfaces duplicate, late, overpaid, and witness disagreement", () => {
     const result = assessSettlement({
       expectedAmount: 1,

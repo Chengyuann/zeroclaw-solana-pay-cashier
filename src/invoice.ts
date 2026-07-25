@@ -51,6 +51,9 @@ export interface CheckInvoiceOptions {
 }
 
 export function defaultRpcUrl(cluster: Cluster): string {
+  if (cluster === "localnet") {
+    return process.env.SOLANA_LOCALNET_RPC_URL ?? "http://127.0.0.1:8899";
+  }
   if (cluster === "devnet") {
     return (
       process.env.SOLANA_DEVNET_RPC_URL ??
@@ -61,6 +64,7 @@ export function defaultRpcUrl(cluster: Cluster): string {
 }
 
 export function defaultWitnessRpcUrl(cluster: Cluster): string {
+  if (cluster === "localnet") return defaultRpcUrl(cluster);
   if (cluster === "devnet") {
     return (
       process.env.SOLANA_DEVNET_WITNESS_RPC_URL ??
@@ -238,15 +242,26 @@ export async function checkInvoice(
     found.blockTime === null
       ? new Date().toISOString()
       : new Date(Number(found.blockTime) * 1_000).toISOString();
-  const witnesses = await Promise.all([
-    createRpcWitness("primary", invoice.rpcUrl, invoice, invoice.signature),
-    createRpcWitness(
-      "independent",
-      invoice.witnessRpcUrl,
-      invoice,
-      invoice.signature,
-    ),
-  ]);
+  const witnesses = await Promise.all(
+    invoice.cluster === "localnet"
+      ? [
+          createRpcWitness(
+            "local-validator",
+            invoice.rpcUrl,
+            invoice,
+            invoice.signature,
+          ),
+        ]
+      : [
+          createRpcWitness("primary", invoice.rpcUrl, invoice, invoice.signature),
+          createRpcWitness(
+            "independent",
+            invoice.witnessRpcUrl,
+            invoice,
+            invoice.signature,
+          ),
+        ],
+  );
   const observedAmount = witnesses.find(
     witness => witness.observedAmount !== undefined,
   )?.observedAmount;
@@ -258,6 +273,7 @@ export async function checkInvoice(
     paidAt: invoice.paidAt,
     expiresAt: invoice.expiresAt,
     witnesses,
+    requiredWitnesses: invoice.cluster === "localnet" ? 1 : 2,
   });
   invoice.settlement = finalizeSettlementProof({
     version: "zc-settlement-v1",
@@ -397,9 +413,11 @@ function buildReceipt(invoice: Invoice): Receipt {
     explorerUrl:
       invoice.slot === "simulated"
         ? "local://simulated-payment"
-        : `https://explorer.solana.com/tx/${invoice.signature}${
-            invoice.cluster === "devnet" ? "?cluster=devnet" : ""
-          }`,
+        : invoice.cluster === "localnet"
+          ? `local-validator://transaction/${invoice.signature}`
+          : `https://explorer.solana.com/tx/${invoice.signature}${
+              invoice.cluster === "devnet" ? "?cluster=devnet" : ""
+            }`,
     paidAt: invoice.paidAt,
     offerHash: invoice.offerHash,
     proofHash: invoice.settlement.proofHash,

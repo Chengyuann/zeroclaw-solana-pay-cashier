@@ -1,4 +1,4 @@
-export type Cluster = "devnet" | "mainnet-beta";
+export type Cluster = "localnet" | "devnet" | "mainnet-beta";
 export type InvoiceStatus = "pending" | "paid" | "expired" | "cancelled";
 export type AssetKind = "SOL" | "SPL";
 export type SettlementOutcome = "accepted" | "attention" | "rejected" | "simulated";

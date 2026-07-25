@@ -41,7 +41,8 @@ Collect:
 - amount;
 - asset: SOL or an SPL token mint and symbol;
 - order ID;
-- cluster, defaulting to devnet for demos.
+- cluster: localnet for deterministic signed demos, devnet for public-chain
+  demos, or mainnet-beta for production.
 
 Then run:
 
@@ -49,7 +50,7 @@ Then run:
 node dist/cli.js create \
   --recipient <address> \
   --amount <amount> \
-  --cluster <devnet|mainnet-beta> \
+  --cluster <localnet|devnet|mainnet-beta> \
   --order-id <order-id> \
   --label "ZeroClaw Cashier" \
   --message "Payment for <order-id>"

@@ -238,8 +238,12 @@ function numberFlag(flags: FlagMap, name: string, fallback: number): number {
 
 function clusterFlag(flags: FlagMap): Cluster {
   const cluster = stringFlag(flags, "cluster", "devnet");
-  if (cluster !== "devnet" && cluster !== "mainnet-beta") {
-    throw new Error("--cluster must be devnet or mainnet-beta");
+  if (
+    cluster !== "localnet" &&
+    cluster !== "devnet" &&
+    cluster !== "mainnet-beta"
+  ) {
+    throw new Error("--cluster must be localnet, devnet, or mainnet-beta");
   }
   return cluster;
 }
@@ -264,7 +268,7 @@ function helpText(): string {
 
 Commands:
   create --recipient <address> --amount <number> [--mint <address>] [--symbol USDC]
-         [--cluster devnet|mainnet-beta] [--order-id id] [--label text]
+         [--cluster localnet|devnet|mainnet-beta] [--order-id id] [--label text]
          [--expires-in-minutes 15] [--witness-rpc-url <url>]
   status --invoice <id> [--simulate]
   watch --invoice <id> [--timeout 120] [--interval 5]

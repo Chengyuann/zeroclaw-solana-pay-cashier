@@ -19,6 +19,7 @@ export interface SettlementAssessmentInput {
   paidAt: string;
   expiresAt: string;
   witnesses: RpcWitness[];
+  requiredWitnesses?: number;
   simulated?: boolean;
 }
 
@@ -93,8 +94,9 @@ export function assessSettlement(
   }
 
   const validWitnesses = input.witnesses.filter(witness => witness.transactionSucceeded);
+  const requiredWitnesses = input.requiredWitnesses ?? 2;
   const agreed =
-    validWitnesses.length >= 2 &&
+    validWitnesses.length >= requiredWitnesses &&
     validWitnesses.every(
       witness =>
         witness.signature === validWitnesses[0]?.signature &&
@@ -116,7 +118,7 @@ export function assessSettlement(
     outcome,
     anomalies: [...new Set(anomalies)],
     witnessQuorum: {
-      required: 2,
+      required: requiredWitnesses,
       valid: validWitnesses.length,
       agreed,
     },

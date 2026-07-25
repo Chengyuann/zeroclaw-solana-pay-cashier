@@ -146,6 +146,26 @@ export SOLANA_DEVNET_RPC_URL=https://your-solana-devnet-rpc.example
 
 Mainnet can likewise be overridden with `SOLANA_MAINNET_RPC_URL`.
 
+## Deterministic local validator proof
+
+Public devnet faucets frequently rate-limit corporate networks and CI data
+centers. The repository therefore includes a fully signed, non-simulated
+Solana local-validator proof:
+
+```bash
+brew install solana
+npm run build
+./scripts/localnet-demo.sh
+```
+
+This starts a fresh Agave validator, creates and funds an ephemeral payer,
+sends a real Ed25519-signed Solana Pay transaction, validates it through the
+same merchant path, signs the proof bundle, and verifies it offline.
+
+Localnet requires one validator witness. Public devnet receipts require two
+independent RPC witnesses. The two evidence levels are labeled separately and
+are never presented as equivalent.
+
 The optional devnet payer uses a separate faucet RPC because many public read
 RPCs disable `requestAirdrop`:
 
@@ -247,7 +267,7 @@ npm run check
 Expected:
 
 - TypeScript build passes.
-- 10 behavior, proof-integrity, and safety tests pass.
+- 12 behavior, proof-integrity, local-validator, and safety tests pass.
 - ZeroClaw skill audit passes.
 - Both SOPs validate under ZeroClaw `v0.8.3`.
 

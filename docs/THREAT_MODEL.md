@@ -83,6 +83,14 @@ Control: the CLI reports `rpc_unavailable` instead of treating an outage as a va
 
 Control: atomic JSON writes reduce partial state. Production deployment should place the state directory under OS-level access controls and back it up.
 
+### Evidence-level confusion
+
+A local validator transaction is real Solana execution but is not public
+devnet evidence. Localnet receipts require one validator witness and use a
+`local-validator://` transaction locator. Devnet receipts require two
+independent public RPC witnesses and use a Solana Explorer URL. Documentation,
+console output, and videos must preserve that distinction.
+
 ## Explicit non-goals
 
 - No autonomous refunds.

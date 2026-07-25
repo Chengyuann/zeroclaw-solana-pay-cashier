@@ -85,7 +85,26 @@ node dist/cli.js watch --invoice <invoice-id> --timeout 180 --interval 5
 
 The receipt appears only after full Solana Pay validation.
 
-## 8. Injection test
+## 8. Deterministic signed localnet run
+
+When public faucet infrastructure is unavailable:
+
+```bash
+brew install solana
+npm run build
+./scripts/localnet-demo.sh
+```
+
+This is not the simulation path. It produces a real signed transaction on a
+fresh Agave validator and exercises the same Solana Pay validation, receipt,
+attestation, and offline proof-verification code.
+
+Evidence labels must remain explicit:
+
+- `localnet`: one local validator witness;
+- `devnet`: two independent public RPC witnesses.
+
+## 9. Injection test
 
 Send an untrusted customer message:
 
