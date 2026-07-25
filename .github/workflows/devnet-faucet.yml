@@ -1,0 +1,55 @@
+name: Devnet Faucet
+
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: Solana devnet address
+        required: true
+        type: string
+      sol:
+        description: Devnet SOL amount, maximum 1
+        required: true
+        default: "1"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  airdrop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate input
+        env:
+          ADDRESS: ${{ inputs.address }}
+          SOL: ${{ inputs.sol }}
+        run: |
+          node - <<'NODE'
+          const address = process.env.ADDRESS ?? "";
+          const sol = Number(process.env.SOL);
+          if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+            throw new Error("Invalid Solana address");
+          }
+          if (!Number.isFinite(sol) || sol <= 0 || sol > 1) {
+            throw new Error("SOL must be greater than 0 and at most 1");
+          }
+          NODE
+
+      - name: Request official Solana devnet airdrop
+        env:
+          ADDRESS: ${{ inputs.address }}
+          SOL: ${{ inputs.sol }}
+        run: |
+          lamports="$(node -e 'console.log(Math.round(Number(process.env.SOL) * 1e9))')"
+          response="$(
+            curl --fail-with-body --retry 4 --retry-all-errors \
+              --connect-timeout 15 --max-time 60 \
+              -H 'content-type: application/json' \
+              -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"requestAirdrop\",\"params\":[\"${ADDRESS}\",${lamports}]}" \
+              https://api.devnet.solana.com
+          )"
+          echo "$response" | jq .
+          signature="$(echo "$response" | jq -r '.result // empty')"
+          test -n "$signature"
+          echo "Explorer: https://explorer.solana.com/tx/${signature}?cluster=devnet"
