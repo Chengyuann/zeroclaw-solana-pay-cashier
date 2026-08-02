@@ -104,6 +104,7 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 - Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
 - Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
+- Security update: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
 
 ## Known limitation
 

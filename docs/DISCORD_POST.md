@@ -27,3 +27,7 @@ Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/re
 Published:
 
 `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
+
+Security update:
+
+`https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
