@@ -1,0 +1,7 @@
+name = "proof-bundle-verify"
+version = "0.1.0"
+description = "Verify Proof-Carrying Cashier offer and settlement bundles offline"
+author = "Chengyuan Ma"
+wasm_path = "proof_bundle_verify.wasm"
+capabilities = ["tool"]
+permissions = []

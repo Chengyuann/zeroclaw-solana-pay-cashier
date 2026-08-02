@@ -43,6 +43,8 @@ Collect:
 - order ID;
 - cluster: localnet for deterministic signed demos, devnet for public-chain
   demos, or mainnet-beta for production.
+- for devnet or mainnet-beta, two different operator-controlled RPC endpoints:
+  primary and independent witness.
 
 Then run:
 
@@ -55,6 +57,15 @@ node dist/cli.js create \
   --label "ZeroClaw Cashier" \
   --message "Payment for <order-id>"
 ```
+
+For public networks include:
+
+```text
+--rpc-url <primary-rpc> --witness-rpc-url <independent-rpc>
+```
+
+Never reuse the same endpoint for both roles. If either public-network RPC is
+unavailable, stop instead of downgrading the receipt to one witness.
 
 For SPL tokens add:
 
@@ -101,6 +112,11 @@ Export the independently verifiable proof bundle:
 ```text
 node dist/cli.js proof --invoice <invoice-id>
 ```
+
+If the optional `proof-bundle-verify` ZeroClaw plugin is installed, verify a
+bundle inside the agent runtime with tool `verify_cashier_proof_bundle`. It
+has no network or signing permission and must return `verdict: "valid"` before
+describing the bundle as portable proof.
 
 List expired or anomalous payments:
 

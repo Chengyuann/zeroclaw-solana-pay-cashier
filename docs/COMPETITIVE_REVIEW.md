@@ -201,7 +201,10 @@ Relative weaknesses:
 - the strongest live payment proof is local-validator, while some competitors
   show real mainnet funds;
 - the core is a skill/SOP and TypeScript service, not a native WASM plugin;
-- only 14 automated tests, much lower than major Rust plugin submissions;
+- 22 TypeScript tests plus six Rust verifier tests remain fewer than the
+  largest Rust plugin submissions, but now cover bundle splicing,
+  canonicalization, malformed input, witness disagreement, duplicate RPC
+  endpoints, signed-but-contradictory claims, and cross-language verification;
 - no live Telegram/WhatsApp merchant bot available for judges to try;
 - the public console is a signed static snapshot, not a live hosted operator
   service.
@@ -234,7 +237,8 @@ trust boundaries, and complete delivery.
 2. Add property/fuzz tests around canonicalization, proof tampering, malformed
    RPC responses, and witness disagreement.
 3. Add a typed Rust/WASM verifier plugin that accepts a proof bundle and
-   returns a compact verdict inside ZeroClaw.
+   returns a compact verdict inside ZeroClaw. Completed after this review as
+   `zeroclaw/plugins/proof-bundle-verify`.
 4. Add an actual Telegram merchant channel demo with proactive settlement
    announcement.
 5. Document two real operational bugs found under live conditions, including

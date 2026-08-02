@@ -39,12 +39,16 @@ describe("invoice workflow", () => {
       amount: 0.25,
       orderId: "table-4",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
     const second = await createInvoice(store, {
       recipient: RECIPIENT,
       amount: 0.25,
       orderId: "table-5",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
 
     expect(first.paymentUrl).toContain(`solana:${RECIPIENT}`);
@@ -65,8 +69,47 @@ describe("invoice workflow", () => {
       createInvoice(store, { recipient: "not-a-wallet", amount: 1 }),
     ).rejects.toThrow("valid Solana address");
     await expect(
-      createInvoice(store, { recipient: RECIPIENT, amount: 0 }),
+      createInvoice(store, {
+        recipient: RECIPIENT,
+        amount: 0,
+        witnessRpcUrl: "https://rpc-b.example",
+      }),
     ).rejects.toThrow("positive finite number");
+    await expect(
+      createInvoice(store, {
+        recipient: RECIPIENT,
+        amount: 1,
+        cluster: "devnet",
+        rpcUrl: "https://rpc-a.example",
+      }),
+    ).rejects.toThrow("require an independent witness RPC");
+    await expect(
+      createInvoice(store, {
+        recipient: RECIPIENT,
+        amount: 1,
+        cluster: "devnet",
+        rpcUrl: "http://rpc-a.example",
+        witnessRpcUrl: "https://rpc-b.example",
+      }),
+    ).rejects.toThrow("must use HTTPS");
+    await expect(
+      createInvoice(store, {
+        recipient: RECIPIENT,
+        amount: 1,
+        cluster: "localnet",
+        rpcUrl: "http://rpc-a.example",
+        witnessRpcUrl: "http://rpc-a.example",
+      }),
+    ).rejects.toThrow("loopback HTTP");
+    await expect(
+      createInvoice(store, {
+        recipient: RECIPIENT,
+        amount: 1,
+        cluster: "mainnet-beta",
+        rpcUrl: "https://rpc.example/",
+        witnessRpcUrl: "https://RPC.EXAMPLE",
+      }),
+    ).rejects.toThrow("witness RPC must be independent");
   });
 
   it("creates a deterministic local receipt for the demo path", async () => {
@@ -76,6 +119,8 @@ describe("invoice workflow", () => {
       amount: 5,
       orderId: "coffee-1024",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
 
     const result = await checkInvoice(store, invoice.id, {
@@ -101,6 +146,8 @@ describe("invoice workflow", () => {
       amount: 1,
       orderId: "expiring-order",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
     invoice.expiresAt = new Date(Date.now() - 1_000).toISOString();
     await store.saveInvoice(invoice);
@@ -118,6 +165,8 @@ describe("invoice workflow", () => {
       amount: 5,
       orderId: "coffee-1024",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
     await checkInvoice(store, invoice.id, { simulate: true });
 

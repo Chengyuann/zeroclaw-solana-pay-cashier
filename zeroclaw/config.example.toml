@@ -7,6 +7,12 @@ maintenance_interval_secs = 60
 persist_runs = true
 execution_mode = "supervised"
 
+[cashier]
+# Public-network invoices require two different full-method RPC providers.
+primary_rpc_url = "https://your-primary-rpc.example"
+witness_rpc_url = "https://your-independent-rpc.example"
+payer_rpc_url = "https://your-transaction-capable-rpc.example"
+
 [runtime_profiles.cashier.tool_receipts]
 enabled = true
 inject_system_prompt = true

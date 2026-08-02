@@ -1,0 +1,28 @@
+[package]
+name = "proof-bundle-verify"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Offline verifier for Proof-Carrying Cashier bundles in ZeroClaw"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+base64 = "0.22"
+ed25519-dalek = { version = "2", features = ["pkcs8"] }
+hex = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+sha2 = "0.10"
+spki = "0.7"
+wit-bindgen = "0.46"
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
+codegen-units = 1
+
+[workspace]

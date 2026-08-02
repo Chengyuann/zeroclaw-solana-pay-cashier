@@ -57,21 +57,18 @@ export function defaultRpcUrl(cluster: Cluster): string {
   if (cluster === "devnet") {
     return (
       process.env.SOLANA_DEVNET_RPC_URL ??
-      "https://solana-devnet.api.onfinality.io/public"
+      "https://api.devnet.solana.com"
     );
   }
   return process.env.SOLANA_MAINNET_RPC_URL ?? "https://api.mainnet-beta.solana.com";
 }
 
-export function defaultWitnessRpcUrl(cluster: Cluster): string {
+export function defaultWitnessRpcUrl(cluster: Cluster): string | undefined {
   if (cluster === "localnet") return defaultRpcUrl(cluster);
   if (cluster === "devnet") {
-    return (
-      process.env.SOLANA_DEVNET_WITNESS_RPC_URL ??
-      "https://solana-devnet.gateway.tatum.io"
-    );
+    return process.env.SOLANA_DEVNET_WITNESS_RPC_URL;
   }
-  return process.env.SOLANA_MAINNET_WITNESS_RPC_URL ?? defaultRpcUrl(cluster);
+  return process.env.SOLANA_MAINNET_WITNESS_RPC_URL;
 }
 
 export async function createInvoice(
@@ -90,6 +87,19 @@ export async function createInvoice(
   const rpcUrl = input.rpcUrl?.trim() || defaultRpcUrl(cluster);
   const witnessRpcUrl =
     input.witnessRpcUrl?.trim() || defaultWitnessRpcUrl(cluster);
+  if (!witnessRpcUrl) {
+    throw new Error(
+      `${cluster} invoices require an independent witness RPC URL`,
+    );
+  }
+  validateRpcUrl(rpcUrl, cluster, "primary RPC");
+  validateRpcUrl(witnessRpcUrl, cluster, "witness RPC");
+  if (
+    cluster !== "localnet" &&
+    normalizeRpcUrl(rpcUrl) === normalizeRpcUrl(witnessRpcUrl)
+  ) {
+    throw new Error("witness RPC must be independent from the primary RPC");
+  }
   const assetSymbol = sanitizeText(input.assetSymbol, splToken ? "TOKEN" : "SOL", 16);
   const client = createMerchantClient({ rpcUrl });
   const paymentUrl = client.pay
@@ -153,6 +163,40 @@ export async function createInvoice(
   invoice.offerAttestation = await attestHash(store.root, invoice.offerHash);
   await store.saveInvoice(invoice);
   return invoice;
+}
+
+function normalizeRpcUrl(value: string): string {
+  const url = new URL(value);
+  url.hash = "";
+  url.hostname = url.hostname.toLowerCase();
+  url.pathname = url.pathname.replace(/\/+$/, "");
+  return url.toString().replace(/\/$/, "");
+}
+
+function validateRpcUrl(
+  value: string,
+  cluster: Cluster,
+  label: string,
+): void {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error(`${label} must be a valid URL`);
+  }
+  if (cluster !== "localnet" && url.protocol !== "https:") {
+    throw new Error(`${label} must use HTTPS on public networks`);
+  }
+  if (
+    cluster === "localnet" &&
+    url.protocol !== "https:" &&
+    !(
+      url.protocol === "http:" &&
+      ["127.0.0.1", "localhost", "[::1]"].includes(url.hostname)
+    )
+  ) {
+    throw new Error(`${label} must use HTTPS or loopback HTTP`);
+  }
 }
 
 export async function checkInvoice(

@@ -83,12 +83,12 @@ The response should contain:
 
 ## 7. Live devnet settlement
 
-The project defaults to the public OnFinality devnet endpoint because some
-enterprise networks block the official Solana hostname. Override it when
-needed:
+The primary source defaults to the official Solana devnet RPC. Public-network
+invoices fail closed unless a second, independent witness RPC is configured:
 
 ```bash
 export SOLANA_DEVNET_RPC_URL=https://your-solana-devnet-rpc.example
+export SOLANA_DEVNET_WITNESS_RPC_URL=https://your-independent-rpc.example
 ```
 
 Scan the QR with a devnet-capable wallet, then run:

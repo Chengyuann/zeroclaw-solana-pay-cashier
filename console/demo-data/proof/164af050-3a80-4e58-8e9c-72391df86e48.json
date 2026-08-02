@@ -51,9 +51,11 @@
   },
   "verification": {
     "valid": true,
+    "schemaValid": true,
     "offerHashValid": true,
     "settlementHashValid": true,
     "offerAttestationValid": true,
-    "settlementAttestationValid": true
+    "settlementAttestationValid": true,
+    "linkageValid": true
   }
 }

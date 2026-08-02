@@ -5,6 +5,10 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 npm run check
+npm run check:console
+npm run check:plugin
+npm run pages:build
+npm run pages:check
 npm audit --omit=dev
 
 ZEROCLAW_BIN="${ZEROCLAW_BIN:-zeroclaw}"

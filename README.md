@@ -64,7 +64,10 @@ This is deliberately Tier 1:
 - Tamper-evident proof bundles with independent offline verification.
 - Ed25519 issuer attestations over both offer and settlement hashes. This
   attestation key cannot sign Solana transactions or move funds.
-- Dual-RPC witness quorum against OnFinality and Tatum on devnet.
+- Fail-closed dual-RPC witness quorum on public networks; duplicate endpoints
+  never count as independent witnesses.
+- Optional native Rust/WASM proof verifier plugin for offline bundle checks
+  inside ZeroClaw.
 - Exception classification for expiry, late payment, duplicate reference,
   underpayment, overpayment, invalid transfer, and witness disagreement.
 - Cron-friendly pending-invoice poller.
@@ -159,6 +162,8 @@ node dist/cli.js create \
   --recipient BpegjqEbijzZMxFaseiCd6iv1DM3LuL3273NJVyzFmy1 \
   --amount 0.01 \
   --cluster devnet \
+  --rpc-url https://your-primary-rpc.example \
+  --witness-rpc-url https://your-independent-rpc.example \
   --order-id table-4 \
   --label "ZeroClaw Demo Cafe" \
   --message "Charge table 4"
@@ -173,6 +178,8 @@ node dist/cli.js create \
   --mint <token-mint> \
   --symbol USDC \
   --cluster devnet \
+  --rpc-url https://your-primary-rpc.example \
+  --witness-rpc-url https://your-independent-rpc.example \
   --order-id coffee-1024
 ```
 
@@ -186,17 +193,19 @@ node dist/cli.js attention
 node dist/cli.js proof --invoice <invoice-id>
 ```
 
-Use `--rpc-url` during invoice creation when the public Solana endpoint is unavailable or rate limited:
+Configure both RPC roles during public-network invoice creation:
 
 ```bash
 node dist/cli.js create \
   --recipient <merchant-wallet> \
   --amount 0.01 \
   --rpc-url https://your-solana-rpc.example \
+  --witness-rpc-url https://your-independent-rpc.example \
   --order-id table-4
 ```
 
-The endpoint is stored with the invoice so later checks use the same network source.
+Both endpoints are stored with the invoice so later checks use the same
+independent network sources.
 
 The independent witness RPC is stored separately. Override it with:
 
@@ -204,13 +213,25 @@ The independent witness RPC is stored separately. Override it with:
 export SOLANA_DEVNET_WITNESS_RPC_URL=https://your-independent-rpc.example
 ```
 
-The default devnet RPC is `https://solana-devnet.api.onfinality.io/public`
-because some managed enterprise networks poison or block the official
-`api.devnet.solana.com` hostname. Override without changing code:
+The default primary devnet RPC is `https://api.devnet.solana.com`. Public
+devnet and mainnet invoices require a separately configured independent
+witness RPC. Override without changing code:
 
 ```bash
 export SOLANA_DEVNET_RPC_URL=https://your-solana-devnet-rpc.example
+export SOLANA_DEVNET_WITNESS_RPC_URL=https://your-independent-rpc.example
 ```
+
+The bundled payer can use a separate transaction-capable endpoint:
+
+```bash
+export SOLANA_DEVNET_PAYER_RPC_URL=https://your-payer-rpc.example
+npm run devnet -- rpc-check
+```
+
+The preflight requires `getGenesisHash`, `getBalance`, `getLatestBlockhash`,
+and `getSignaturesForAddress`. Do not downgrade a public proof to one RPC when
+an independent provider is unavailable.
 
 Mainnet can likewise be overridden with `SOLANA_MAINNET_RPC_URL`.
 
@@ -323,6 +344,7 @@ tests/            behavior and safety tests
 zeroclaw/
   skills/         agent workflow instructions
   sops/           settlement watch and refund approval procedures
+  plugins/        offline Rust/WASM proof verifier
 docs/             threat model, network diagnosis, reproduction, submission, and video plan
 console/          proof ledger UI, local visual assets, favicon, and manifest
 ```
@@ -330,15 +352,18 @@ console/          proof ledger UI, local visual assets, favicon, and manifest
 ## Verification
 
 ```bash
-npm run check
+ZEROCLAW_BIN=/path/to/zeroclaw bash scripts/verify.sh
 ```
 
 Expected:
 
 - TypeScript build passes.
-- 14 behavior, proof-integrity, console-server, and safety tests pass.
+- 22 TypeScript behavior, proof-integrity, console-server, and safety tests
+  pass.
+- 6 Rust proof-verifier tests pass.
 - Console static assets and manifest are present.
 - Production dependency audit reports zero vulnerabilities.
+- Native proof verifier plugin host tests and `wasm32-wasip2` build pass in CI.
 - ZeroClaw skill audit passes.
 - Both SOPs validate under ZeroClaw `v0.8.3`.
 

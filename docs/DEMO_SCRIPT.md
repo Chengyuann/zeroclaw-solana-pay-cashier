@@ -107,7 +107,7 @@ Show:
 
 Finish on:
 
-- 14 tests passed;
+- 22 TypeScript and 6 Rust tests passed;
 - ZeroClaw skill audit passed;
 - two SOPs valid;
 - repository URL;

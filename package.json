@@ -24,6 +24,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run build && npm test",
+    "check:plugin": "bash scripts/verify-proof-plugin.sh",
     "check:console": "test -f console/favicon.ico && test -f console/site.webmanifest && test -f console/assets/cashier-logo.jpg && test -f console/assets/runway-human-signature.jpg && test -f console/demo-data/invoices/index.json && command -v screen >/dev/null && bash -n scripts/console-start.sh scripts/console-stop.sh scripts/console-status.sh"
   },
   "dependencies": {

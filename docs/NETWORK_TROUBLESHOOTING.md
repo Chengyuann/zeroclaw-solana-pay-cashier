@@ -42,7 +42,8 @@ It also supported:
 - `getSignaturesForAddress`
 - `getTransaction`
 
-The cashier uses this endpoint as its devnet default.
+This endpoint was used for the July 2026 development session. It is no longer
+the cashier default because anonymous method availability later changed.
 
 ## Override
 
@@ -50,6 +51,7 @@ Use an operator-controlled endpoint at any time:
 
 ```bash
 export SOLANA_DEVNET_RPC_URL=https://your-solana-devnet-rpc.example
+export SOLANA_DEVNET_WITNESS_RPC_URL=https://your-independent-rpc.example
 ```
 
 or per invoice:
@@ -57,6 +59,7 @@ or per invoice:
 ```bash
 node dist/cli.js create \
   --rpc-url https://your-solana-devnet-rpc.example \
+  --witness-rpc-url https://your-independent-rpc.example \
   ...
 ```
 
@@ -77,3 +80,26 @@ EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG
 
 An unpaid cashier invoice should now return a structured `pending` result
 with exit code `2`, not `rpc_unavailable`.
+
+## August 2, 2026 follow-up
+
+The previously usable anonymous endpoints no longer provide a complete
+two-witness path from this network:
+
+- OnFinality returns HTTP `429` for balance, blockhash, and signature-history
+  methods after the initial health/genesis request.
+- Tatum anonymous access permits health/genesis/blockhash but rejects
+  `getBalance` and `getSignaturesForAddress` as paid or authenticated methods.
+- The official devnet hostname still times out from the current network.
+
+This is treated as infrastructure unavailable, not as a payment result. The
+cashier keeps the existing signed local-validator evidence and does not claim a
+fresh public-devnet receipt until two full-method independent RPC providers are
+configured.
+
+Use a separate transaction-capable payer endpoint when available:
+
+```bash
+export SOLANA_DEVNET_PAYER_RPC_URL=https://your-payer-rpc.example
+npm run devnet -- rpc-check
+```

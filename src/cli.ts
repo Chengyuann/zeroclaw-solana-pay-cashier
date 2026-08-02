@@ -269,7 +269,7 @@ function helpText(): string {
 Commands:
   create --recipient <address> --amount <number> [--mint <address>] [--symbol USDC]
          [--cluster localnet|devnet|mainnet-beta] [--order-id id] [--label text]
-         [--expires-in-minutes 15] [--witness-rpc-url <url>]
+         [--expires-in-minutes 15] [--rpc-url <url>] [--witness-rpc-url <url>]
   status --invoice <id> [--simulate]
   watch --invoice <id> [--timeout 120] [--interval 5]
   list

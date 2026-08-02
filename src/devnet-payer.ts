@@ -22,32 +22,37 @@ const command = process.argv[2];
 const payerCluster =
   process.env.PAYER_CLUSTER === "localnet" ? "localnet" : "devnet";
 
-switch (command) {
-  case "init":
-    await initWallet();
-    break;
-  case "address":
-    await showAddress();
-    break;
-  case "balance":
-    await showBalance();
-    break;
-  case "airdrop":
-    await requestAirdrop(Number(process.argv[3] ?? "1"));
-    break;
-  case "inspect":
-    await inspectPayment(requiredArg(3, "payment URL"));
-    break;
-  case "pay":
-    await pay(requiredArg(3, "payment URL"));
-    break;
-  default:
-    process.stdout.write(`Devnet payer
+try {
+  switch (command) {
+    case "init":
+      await initWallet();
+      break;
+    case "address":
+      await showAddress();
+      break;
+    case "balance":
+      await showBalance();
+      break;
+    case "rpc-check":
+      await checkRpc();
+      break;
+    case "airdrop":
+      await requestAirdrop(Number(process.argv[3] ?? "1"));
+      break;
+    case "inspect":
+      await inspectPayment(requiredArg(3, "payment URL"));
+      break;
+    case "pay":
+      await pay(requiredArg(3, "payment URL"));
+      break;
+    default:
+      process.stdout.write(`Devnet payer
 
 Commands:
   npm run devnet -- init
   npm run devnet -- address
   npm run devnet -- balance
+  npm run devnet -- rpc-check
   npm run devnet -- airdrop [SOL]
   npm run devnet -- inspect <solana-pay-url>
   npm run devnet -- pay <solana-pay-url>
@@ -55,6 +60,15 @@ Commands:
 This tool refuses transaction-request URLs and uses devnet or localnet only.
 The key file is stored under .state/ and must never be committed.
 `);
+  }
+} catch (error) {
+  output({
+    ok: false,
+    command,
+    kind: "rpc_or_payment_error",
+    error: error instanceof Error ? error.message : String(error),
+  });
+  process.exitCode = 1;
 }
 
 async function initWallet(): Promise<void> {
@@ -85,6 +99,32 @@ async function showBalance(): Promise<void> {
     address: signer.address,
     lamports: result.value.toString(),
     sol: Number(result.value) / 1_000_000_000,
+  });
+}
+
+async function checkRpc(): Promise<void> {
+  const signer = await loadSigner();
+  const rpcUrl = payerRpcUrl();
+  const rpc = createSolanaRpc(devnet(rpcUrl));
+  const [genesisHash, balance, latestBlockhash, signatures] = await Promise.all([
+    rpc.getGenesisHash().send(),
+    rpc.getBalance(signer.address, { commitment: "confirmed" }).send(),
+    rpc.getLatestBlockhash({ commitment: "confirmed" }).send(),
+    rpc
+      .getSignaturesForAddress(signer.address, {
+        commitment: "confirmed",
+        limit: 1,
+      })
+      .send(),
+  ]);
+  output({
+    ok: true,
+    rpcUrl,
+    genesisHash,
+    address: signer.address,
+    balanceLamports: balance.value.toString(),
+    latestBlockhash: latestBlockhash.value.blockhash,
+    recentSignatures: signatures.length,
   });
 }
 
@@ -123,7 +163,7 @@ async function pay(url: string): Promise<void> {
   const signer = await loadSigner();
   const parsed = parseTransfer(url);
   const client = createWalletClient({
-    rpcUrl: defaultRpcUrl(payerCluster),
+    rpcUrl: payerRpcUrl(),
     payer: signer,
   });
   const instructions = await client.pay.createTransfer({
@@ -183,7 +223,12 @@ async function loadSigner() {
 }
 
 function createRpc() {
-  return createSolanaRpc(devnet(defaultRpcUrl(payerCluster)));
+  return createSolanaRpc(devnet(payerRpcUrl()));
+}
+
+function payerRpcUrl(): string {
+  if (payerCluster === "localnet") return defaultRpcUrl(payerCluster);
+  return process.env.SOLANA_DEVNET_PAYER_RPC_URL ?? defaultRpcUrl(payerCluster);
 }
 
 function requiredArg(index: number, name: string): string {

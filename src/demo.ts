@@ -24,6 +24,8 @@ try {
     recipient: RECIPIENT,
     amount: 0.01,
     cluster: "devnet",
+    rpcUrl: "https://rpc-primary.example",
+    witnessRpcUrl: "https://rpc-independent.example",
     orderId: "table-4",
     label: "ZeroClaw Demo Cafe",
     message: "Charge table 4",

@@ -51,9 +51,11 @@ Refunds remain non-custodial. Customer messages can create a request, but only t
   inspection.
 - Portable proof JSON export, pending-invoice QR display, and automatic ledger
   refresh.
+- Native Rust/WASM proof verifier plugin for offline bundle checks inside
+  ZeroClaw.
 - Original GPT Image 2 brand mark and proof-evidence visual studies.
 - ZeroClaw skill and two validated SOPs.
-- Deterministic demo and 14 automated behavior, proof, server, and safety tests.
+- Deterministic demo, 22 TypeScript tests, and 6 Rust proof-verifier tests.
 
 ## Custody tier
 
@@ -119,7 +121,9 @@ codes, or mutation APIs.
 
 Verified on August 2, 2026:
 
-- TypeScript build and all 14 automated tests pass.
+- TypeScript build and all 22 TypeScript tests pass.
+- All 6 Rust proof-verifier tests pass.
+- Proof verifier plugin host tests and `wasm32-wasip2` release build pass in CI.
 - Production dependency audit reports zero vulnerabilities.
 - Console server integration tests cover static assets, API responses, proof
   bundles, security headers, HEAD requests, traversal rejection, and method

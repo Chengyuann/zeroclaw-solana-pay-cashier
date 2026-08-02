@@ -302,18 +302,21 @@ async function renderSnapshot() {
   const verification = proofBody?.verification;
   const checks = verification
     ? [
+        verification.schemaValid,
         verification.offerHashValid,
-        verification.settlementHashValid,
         verification.offerAttestationValid,
+        verification.settlementHashValid,
         verification.settlementAttestationValid,
+        verification.linkageValid,
       ]
     : [];
   const validChecks = checks.filter(Boolean).length;
+  const totalChecks = checks.filter(check => check !== null).length;
   const stamp = document.querySelector("#snapshot-score");
   stamp.dataset.state = verification?.valid ? "valid" : "invalid";
   stamp.innerHTML = `
     <span>Proof</span>
-    <strong>${verification ? `${validChecks}/4` : "--"}</strong>
+    <strong>${verification ? `${validChecks}/${totalChecks}` : "--"}</strong>
     <small>${verification?.valid ? "verified" : "unverified"}</small>`;
 
   setText("snapshot-order", invoice.orderId);
@@ -504,6 +507,7 @@ function renderProofView(invoice) {
       <section class="detail-section">
         <h3 class="detail-section-title">Offline integrity checks</h3>
         <div class="verification-list">
+          ${verificationItem("Bundle schema and versions", verification.schemaValid)}
           ${verificationItem("Canonical offer hash", verification.offerHashValid)}
           ${verificationItem("Offer issuer attestation", verification.offerAttestationValid)}
           ${
@@ -518,6 +522,14 @@ function renderProofView(invoice) {
                   verification.settlementAttestationValid,
                 )
               : verificationPendingItem("Settlement issuer attestation")
+          }
+          ${
+            settlement
+              ? verificationItem(
+                  "Offer and settlement linkage",
+                  verification.linkageValid,
+                )
+              : verificationPendingItem("Offer and settlement linkage")
           }
         </div>
       </section>

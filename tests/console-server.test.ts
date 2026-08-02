@@ -38,6 +38,8 @@ describe("cashier console server", () => {
       amount: 0.01,
       orderId: "console-test",
       cluster: "devnet",
+      rpcUrl: "https://rpc-a.example",
+      witnessRpcUrl: "https://rpc-b.example",
     });
     const baseUrl = await startServer(stateRoot);
 
