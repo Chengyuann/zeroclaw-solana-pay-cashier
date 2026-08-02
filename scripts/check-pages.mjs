@@ -37,6 +37,9 @@ if (invoices.invoices.some(invoice => invoice.qrPath || invoice.paymentUrl)) {
 }
 
 const indexBody = await readFile(path.join(pagesDir, "index.html"), "utf8");
+if (/(?:href|src|poster|content)="\/(?!\/)/.test(indexBody)) {
+  errors.push("public index contains an unresolved root-relative asset URL");
+}
 const requiredReviewSignals = [
   "Judge review pack",
   "npm ci &amp;&amp; npm run verify:public-proof",

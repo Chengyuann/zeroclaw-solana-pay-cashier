@@ -76,7 +76,10 @@ process.stdout.write(
 );
 
 function rewriteRootUrls(source) {
-  return source.replaceAll(/((?:href|src|content)=")\/(?!\/)/g, "$1./");
+  return source.replaceAll(
+    /((?:href|src|poster|content)=")\/(?!\/)/g,
+    "$1./",
+  );
 }
 
 function rewriteManifest(source) {
