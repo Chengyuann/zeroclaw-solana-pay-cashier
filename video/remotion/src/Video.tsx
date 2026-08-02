@@ -58,11 +58,113 @@ const enterStyle = (frame: number): React.CSSProperties => ({
   })}px`,
 });
 
+const sceneCameraStyle = (
+  frame: number,
+  durationInFrames: number,
+  drift: "left" | "right" | "up" | "none" = "none",
+): React.CSSProperties => {
+  const progress = interpolate(frame, [0, Math.max(1, durationInFrames - 1)], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const offsetX = drift === "left" ? 12 - progress * 24 : drift === "right" ? -12 + progress * 24 : 0;
+  const offsetY = drift === "up" ? 12 - progress * 24 : 0;
+  return {
+    scale: 1.018 + progress * 0.012,
+    translate: `${offsetX}px ${offsetY}px`,
+  };
+};
+
+const focusStyle = (
+  frame: number,
+  start: number,
+  end: number,
+  offset = 20,
+): React.CSSProperties => ({
+  opacity: interpolate(frame, [start, start + 12, end - 12, end], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  }),
+  translate: `${interpolate(frame, [start, start + 16], [offset, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  })}px 0`,
+});
+
+const TransitionCard: React.FC<{ scene: Scene; index: number }> = ({ scene, index }) => {
+  const frame = useCurrentFrame();
+  const label = String(index + 1).padStart(2, "0");
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", overflow: "hidden" }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: C.bg,
+          opacity: interpolate(frame, [0, 6, 18, 25], [0, 0.96, 0.96, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          width: 260,
+          left: interpolate(frame, [0, 25], [-300, 1940], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.bezier(0.22, 1, 0.36, 1),
+          }),
+          background: C.yellow,
+          transform: "skewX(-9deg)",
+          opacity: 0.94,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: 94,
+          right: 94,
+          top: "50%",
+          display: "grid",
+          gridTemplateColumns: "120px 1fr",
+          gap: 34,
+          alignItems: "center",
+          translate: `0 ${interpolate(frame, [3, 14], [34, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.bezier(0.16, 1, 0.3, 1),
+          })}px`,
+          opacity: interpolate(frame, [3, 12, 19, 25], [0, 1, 1, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+        }}
+      >
+        <div style={{ fontFamily: mono, fontSize: 64, fontWeight: 800, color: C.yellow }}>
+          {label}
+        </div>
+        <div>
+          <div style={{ fontFamily: sans, fontSize: 42, fontWeight: 780 }}>{scene.title}</div>
+          <div style={{ marginTop: 8, fontFamily: mono, fontSize: 20, color: C.muted }}>
+            {scene.visual?.intent}
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const Shell: React.FC<{
   scene: Scene;
   frame: number;
+  drift?: "left" | "right" | "up" | "none";
   children: React.ReactNode;
-}> = ({ scene, frame, children }) => (
+}> = ({ scene, frame, drift = "none", children }) => (
   <AbsoluteFill
     style={{
       background: C.bg,
@@ -75,6 +177,16 @@ const Shell: React.FC<{
     <div
       style={{
         position: "absolute",
+        inset: -26,
+        backgroundImage:
+          "linear-gradient(rgba(128,214,181,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(128,214,181,.035) 1px, transparent 1px)",
+        backgroundSize: "56px 56px",
+        ...sceneCameraStyle(frame, scene.duration_frames, drift),
+      }}
+    />
+    <div
+      style={{
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
@@ -82,22 +194,24 @@ const Shell: React.FC<{
         background: C.yellow,
       }}
     />
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 34,
-      }}
-    >
-      <div style={{ fontSize: 22, fontWeight: 750, color: C.mint }}>
-        PROOF-CARRYING CASHIER
+    <div style={{ position: "relative", zIndex: 1, height: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 34,
+        }}
+      >
+        <div style={{ fontSize: 22, fontWeight: 750, color: C.mint }}>
+          PROOF-CARRYING CASHIER
+        </div>
+        <div style={{ fontSize: 18, color: C.muted, fontFamily: mono }}>
+          {scene.title.toUpperCase()}
+        </div>
       </div>
-      <div style={{ fontSize: 18, color: C.muted, fontFamily: mono }}>
-        {scene.title.toUpperCase()}
-      </div>
+      <div style={{ flex: 1, ...enterStyle(frame) }}>{children}</div>
     </div>
-    <div style={{ flex: 1, ...enterStyle(frame) }}>{children}</div>
   </AbsoluteFill>
 );
 
@@ -141,7 +255,7 @@ const Pill: React.FC<{ children: React.ReactNode; tone?: "ok" | "warn" | "bad" }
 );
 
 const ProblemScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="right">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 0.9fr", gap: 74, height: "100%" }}>
       <div style={{ alignSelf: "center" }}>
         <BigTitle>
@@ -178,6 +292,7 @@ const ProblemScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame 
               padding: "0 22px",
               background: index < 2 ? "#1b2527" : "#17352d",
               border: `1px solid ${index < 2 ? C.line : C.green}`,
+              ...focusStyle(frame, 10 + index * 10, scene.duration_frames - 18, 28),
             }}
           >
             <span style={{ fontSize: 25 }}>{label}</span>
@@ -192,7 +307,7 @@ const ProblemScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame 
 );
 
 const AgentScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="left">
     <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: 70, alignItems: "center" }}>
       <div>
         <BigTitle accent={C.mint}>One approved call.</BigTitle>
@@ -206,6 +321,11 @@ const AgentScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame })
           border: `1px solid ${C.line}`,
           padding: 28,
           boxShadow: "0 26px 70px rgba(0,0,0,.34)",
+          scale: interpolate(frame, [8, 28], [0.965, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.bezier(0.16, 1, 0.3, 1),
+          }),
         }}
       >
         <div style={{ color: C.muted, fontFamily: mono, fontSize: 18, marginBottom: 22 }}>
@@ -230,7 +350,7 @@ const AgentScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame })
 );
 
 const OfferScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="right">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 520px", gap: 68, alignItems: "center" }}>
       <div>
         <BigTitle>A signed offer before funds move.</BigTitle>
@@ -242,17 +362,28 @@ const OfferScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame })
             ["Amount", "0.001 SOL"],
             ["Offer hash", short(evidence.offerHash, 16, 12)],
             ["Attestation", "Ed25519 · non-funds key"],
-          ].map(([key, value]) => (
+          ].map(([key, value], index) => (
             <React.Fragment key={key}>
-              <div style={{ color: C.muted, fontSize: 23 }}>{key}</div>
-              <div style={{ fontFamily: mono, fontSize: 23, color: key === "Offer hash" ? C.mint : C.white }}>
+              <div style={{ color: C.muted, fontSize: 23, ...focusStyle(frame, 8 + index * 8, scene.duration_frames - 18, -18) }}>{key}</div>
+              <div style={{ fontFamily: mono, fontSize: 23, color: key === "Offer hash" ? C.mint : C.white, ...focusStyle(frame, 10 + index * 8, scene.duration_frames - 18, 18) }}>
                 {value}
               </div>
             </React.Fragment>
           ))}
         </div>
       </div>
-      <div style={{ background: C.paper, padding: 22, border: `4px solid ${C.green}` }}>
+      <div
+        style={{
+          background: C.paper,
+          padding: 22,
+          border: `4px solid ${C.green}`,
+          scale: interpolate(frame, [0, scene.duration_frames - 1], [0.94, 1.035], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.bezier(0.16, 1, 0.3, 1),
+          }),
+        }}
+      >
         <Img src={staticFile("assets/payment-qr.png")} style={{ width: "100%", display: "block" }} />
       </div>
     </div>
@@ -260,7 +391,7 @@ const OfferScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame })
 );
 
 const TransactionScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="left">
     <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: 68, alignItems: "center" }}>
       <div>
         <BigTitle accent={C.yellow}>Real Solana execution.</BigTitle>
@@ -270,18 +401,20 @@ const TransactionScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, fr
       </div>
       <div style={{ background: "#091012", border: `1px solid ${C.line}`, padding: 30 }}>
         <div style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: "18px 20px", fontSize: 24 }}>
-          <div style={{ color: C.muted }}>Payer</div>
-          <div style={{ fontFamily: mono }}>{short(evidence.payer, 14, 10)}</div>
-          <div style={{ color: C.muted }}>Recipient</div>
-          <div style={{ fontFamily: mono }}>{short(evidence.recipient, 14, 10)}</div>
-          <div style={{ color: C.muted }}>Signature</div>
-          <div style={{ fontFamily: mono, color: C.mint }}>{short(evidence.signature, 20, 16)}</div>
-          <div style={{ color: C.muted }}>Slot</div>
-          <div style={{ fontFamily: mono }}>{evidence.slot}</div>
-          <div style={{ color: C.muted }}>Fee</div>
-          <div style={{ fontFamily: mono }}>5,000 lamports</div>
-          <div style={{ color: C.muted }}>Result</div>
-          <div><Pill>CONFIRMED · ERR NULL</Pill></div>
+          {[
+            ["Payer", short(evidence.payer, 14, 10)],
+            ["Recipient", short(evidence.recipient, 14, 10)],
+            ["Signature", short(evidence.signature, 20, 16)],
+            ["Slot", evidence.slot],
+            ["Fee", "5,000 lamports"],
+          ].map(([key, value], index) => (
+            <React.Fragment key={key}>
+              <div style={{ color: C.muted, ...focusStyle(frame, 8 + index * 11, scene.duration_frames - 24, -18) }}>{key}</div>
+              <div style={{ fontFamily: mono, color: key === "Signature" ? C.mint : C.white, ...focusStyle(frame, 10 + index * 11, scene.duration_frames - 24, 18) }}>{value}</div>
+            </React.Fragment>
+          ))}
+          <div style={{ color: C.muted, ...focusStyle(frame, 64, scene.duration_frames - 18, -18) }}>Result</div>
+          <div style={focusStyle(frame, 68, scene.duration_frames - 18, 18)}><Pill>CONFIRMED · ERR NULL</Pill></div>
         </div>
       </div>
     </div>
@@ -289,7 +422,7 @@ const TransactionScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, fr
 );
 
 const ProofScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="up">
     <div
       style={{
         height: "100%",
@@ -316,22 +449,57 @@ const ProofScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame })
           border: `1px solid ${C.line}`,
           padding: 12,
           boxShadow: "0 28px 80px rgba(0,0,0,.4)",
+          overflow: "hidden",
         }}
       >
-        <Img src={staticFile("assets/proof-console.jpg")} style={{ width: "100%", display: "block" }} />
+        <Img
+          src={staticFile("assets/proof-console.jpg")}
+          style={{
+            width: "100%",
+            display: "block",
+            scale: interpolate(frame, [0, scene.duration_frames - 1], [1.01, 1.1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+            translate: `${interpolate(frame, [0, scene.duration_frames - 1], [0, -24], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            })}px ${interpolate(frame, [0, scene.duration_frames - 1], [0, -12], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            })}px`,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 36,
+            top: 44,
+            width: 250,
+            height: 164,
+            border: `4px solid ${C.yellow}`,
+            boxShadow: "0 0 0 999px rgba(6,12,13,.44)",
+            opacity: interpolate(frame, [62, 78], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+          }}
+        />
       </div>
     </div>
   </Shell>
 );
 
 const SafetyScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="right">
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
       <div>
         <BigTitle>Exceptions do not disappear.</BigTitle>
         <div style={{ marginTop: 30, display: "flex", gap: 10, flexWrap: "wrap" }}>
-          {["late", "duplicate", "underpaid", "overpaid", "invalid", "RPC dispute"].map((value) => (
-            <Pill key={value} tone="bad">{value.toUpperCase()}</Pill>
+          {["late", "duplicate", "underpaid", "overpaid", "invalid", "RPC dispute"].map((value, index) => (
+            <div key={value} style={focusStyle(frame, 8 + index * 10, scene.duration_frames - 20, 18)}>
+              <Pill tone="bad">{value.toUpperCase()}</Pill>
+            </div>
           ))}
         </div>
       </div>
@@ -341,8 +509,8 @@ const SafetyScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }
           ["Refund request", "no payment URL"],
           ["Owner code", "required"],
           ["Final signature", "human wallet"],
-        ].map(([key, value]) => (
-          <div key={key} style={{ padding: "18px 0", borderBottom: `1px solid ${C.line}` }}>
+        ].map(([key, value], index) => (
+          <div key={key} style={{ padding: "18px 0", borderBottom: `1px solid ${C.line}`, ...focusStyle(frame, 26 + index * 16, scene.duration_frames - 16, 26) }}>
             <div style={{ fontSize: 24 }}>{key}</div>
             <div style={{ marginTop: 4, color: value === "human wallet" ? C.mint : C.muted, fontFamily: mono, fontSize: 20 }}>
               {value}
@@ -355,18 +523,18 @@ const SafetyScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }
 );
 
 const CloseScene: React.FC<{ scene: Scene; frame: number }> = ({ scene, frame }) => (
-  <Shell scene={scene} frame={frame}>
+  <Shell scene={scene} frame={frame} drift="up">
     <div style={{ height: "100%", display: "grid", placeItems: "center", textAlign: "center" }}>
       <div>
         <BigTitle accent={C.mint}>Proof-Carrying Cashier</BigTitle>
         <div style={{ marginTop: 36, display: "flex", justifyContent: "center", gap: 18 }}>
-          <Pill>12 TESTS</Pill>
+          <Pill>26 TS + 6 RUST TESTS</Pill>
           <Pill>SKILL AUDIT PASS</Pill>
           <Pill>2 SOPs VALID</Pill>
           <Pill tone="warn">T1 CUSTODY</Pill>
         </div>
         <div style={{ marginTop: 42, fontFamily: mono, fontSize: 24, color: C.muted }}>
-          ./scripts/localnet-demo.sh
+          npm run verify:public-proof
         </div>
       </div>
     </div>
@@ -432,5 +600,16 @@ export const DemoVideo: React.FC<{ timeline: Timeline }> = ({ timeline }) => (
       </Sequence>
     ))}
     <CaptionLayer captions={timeline.scenes.flatMap((scene) => scene.captions || [])} />
+    {timeline.scenes.map((scene, index) =>
+      index > 0 ? (
+        <Sequence
+          key={`transition-${scene.id}`}
+          from={Math.max(0, scene.start_frame - 13)}
+          durationInFrames={26}
+        >
+          <TransitionCard scene={scene} index={index} />
+        </Sequence>
+      ) : null,
+    )}
   </AbsoluteFill>
 );

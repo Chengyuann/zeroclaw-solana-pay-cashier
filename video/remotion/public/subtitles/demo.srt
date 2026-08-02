@@ -23,5 +23,5 @@ The cashier validates the transfer, records the witness evidence, signs the sett
 Late, duplicate, underpaid, overpaid, invalid, or disputed payments enter an attention queue. Refunds require owner approval. The final boundary remains T1: the human wallet signs.
 
 7
-00:01:02,540 --> 00:01:12,940
-Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.
+00:01:02,540 --> 00:01:14,860
+Twenty-six TypeScript tests and six Rust verifier tests pass. The ZeroClaw skill audit and both SOPs validate. One command independently checks the public proof. Proof-Carrying Cashier is ready to review.

@@ -21,7 +21,7 @@ A non-custodial Solana Pay merchant workflow that creates immutable offers, vali
 
 GitHub: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier
 Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0
-73-second demo: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4
+75-second Director Cut: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-director-cut.mp4
 ```
 
 Published:

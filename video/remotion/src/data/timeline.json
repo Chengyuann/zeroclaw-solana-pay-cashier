@@ -3,8 +3,8 @@
   "fps": 30,
   "width": 1920,
   "height": 1080,
-  "duration_seconds": 73.39,
-  "duration_frames": 2202,
+  "duration_seconds": 75.31,
+  "duration_frames": 2260,
   "audio_mix": "public/audio/voiceover-mix.wav",
   "scenes": [
     {
@@ -158,24 +158,24 @@
       "id": "07-close",
       "title": "Reproducible",
       "start_seconds": 62.54,
-      "end_seconds": 73.39,
-      "duration_seconds": 10.85,
+      "end_seconds": 75.31,
+      "duration_seconds": 12.77,
       "start_frame": 1876,
-      "duration_frames": 326,
-      "voiceover": "Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.",
+      "duration_frames": 384,
+      "voiceover": "Twenty-six TypeScript tests and six Rust verifier tests pass. The ZeroClaw skill audit and both SOPs validate. One command independently checks the public proof. Proof-Carrying Cashier is ready to review.",
       "audio": "public/audio/07-close.wav",
-      "audio_duration_seconds": 10.4,
+      "audio_duration_seconds": 12.32,
       "padding_after_seconds": 0.45,
       "captions": [
         {
-          "text": "Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.",
+          "text": "Twenty-six TypeScript tests and six Rust verifier tests pass. The ZeroClaw skill audit and both SOPs validate. One command independently checks the public proof. Proof-Carrying Cashier is ready to review.",
           "start_seconds": 62.54,
-          "end_seconds": 72.94
+          "end_seconds": 74.86
         }
       ],
       "visual": {
         "kind": "close",
-        "intent": "12 tests. Signed proof. T1 custody."
+        "intent": "26 TypeScript tests. 6 Rust tests. Independent public proof."
       }
     }
   ]

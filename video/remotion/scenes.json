@@ -2,6 +2,8 @@
   {
     "id": "01-problem",
     "title": "The missing layer",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "A payment link is easy. Reconciliation is not. Merchants need proof of what was requested, what settled, and which exceptions still need attention.",
     "visual": {
       "kind": "problem",
@@ -11,6 +13,8 @@
   {
     "id": "02-zeroclaw",
     "title": "Supervised ZeroClaw",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "The merchant asks ZeroClaw to charge an order. A supervised tool call creates the invoice, while the agent holds no wallet key and cannot move funds.",
     "visual": {
       "kind": "agent",
@@ -20,6 +24,8 @@
   {
     "id": "03-offer",
     "title": "A signed offer",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "Each invoice gets a payment identifier, expiry, unique Solana Pay reference, canonical offer hash, and a non-funds Ed25519 issuer attestation.",
     "visual": {
       "kind": "offer",
@@ -29,6 +35,8 @@
   {
     "id": "04-transaction",
     "title": "Real Solana execution",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "This is not the simulation path. An ephemeral payer signs a zero point zero zero one SOL transfer on a fresh Agave validator, with the exact recipient, memo, and reference.",
     "visual": {
       "kind": "transaction",
@@ -38,6 +46,8 @@
   {
     "id": "05-proof",
     "title": "Proof that travels",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "The cashier validates the transfer, records the witness evidence, signs the settlement hash, and exports a bundle that verifies offline. The result is accepted with no anomalies.",
     "visual": {
       "kind": "proof",
@@ -48,6 +58,8 @@
   {
     "id": "06-safety",
     "title": "Fail closed",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
     "voiceover": "Late, duplicate, underpaid, overpaid, invalid, or disputed payments enter an attention queue. Refunds require owner approval. The final boundary remains T1: the human wallet signs.",
     "visual": {
       "kind": "safety",
@@ -57,10 +69,12 @@
   {
     "id": "07-close",
     "title": "Reproducible",
-    "voiceover": "Twelve tests pass, the ZeroClaw skill audit passes, both SOPs validate, and one command reproduces the signed local-validator proof. Proof-Carrying Cashier is ready to review.",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "Twenty-six TypeScript tests and six Rust verifier tests pass. The ZeroClaw skill audit and both SOPs validate. One command independently checks the public proof. Proof-Carrying Cashier is ready to review.",
     "visual": {
       "kind": "close",
-      "intent": "12 tests. Signed proof. T1 custody."
+      "intent": "26 TypeScript tests. 6 Rust tests. Independent public proof."
     }
   }
 ]

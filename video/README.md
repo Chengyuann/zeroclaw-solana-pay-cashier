@@ -1,8 +1,12 @@
 # Demo video
 
-The formal showcase is 73.4 seconds, 1920x1080, with English narration and
-captions. It uses a real signed Agave local-validator payment and labels that
-evidence level explicitly.
+The Director Cut showcase is 75.3 seconds, 1920x1080, with local VoxCPM2
+English narration and captions. It uses a real signed Agave local-validator
+payment and labels that evidence level explicitly.
+
+The second cut adds chapter transitions, controlled camera motion, progressive
+evidence reveals, proof-console focus, and an updated independent-verification
+close. It does not add stock footage, music, or unverified product claims.
 
 The repository keeps the Remotion source, storyboard, subtitles, and
 de-identified product evidence. The GitHub Release carries:

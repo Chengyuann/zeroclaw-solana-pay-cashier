@@ -1,11 +1,12 @@
 {
-  "arc": ["problem", "agent workflow", "signed offer", "real transaction", "proof", "safety close"],
+  "arc": ["problem", "agent workflow", "signed offer", "real transaction", "proof", "safety", "independent verification close"],
   "claims": [
     "ZeroClaw creates the offer through a supervised tool call",
     "The merchant agent never receives a wallet private key",
     "The payment transaction is signed and executed on a real Agave validator",
     "Offer and settlement proof hashes have Ed25519 issuer attestations",
     "The proof bundle verifies offline",
-    "Public devnet requires two independent RPC witnesses; localnet requires one validator witness"
+    "Public devnet requires two independent RPC witnesses; localnet requires one validator witness",
+    "A clean checkout can independently download and verify the public proof"
   ]
 }
