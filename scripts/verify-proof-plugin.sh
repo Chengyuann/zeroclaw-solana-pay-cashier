@@ -29,20 +29,21 @@ fi
 "$CARGO_BIN" build --locked --target wasm32-wasip2 --release
 test -f target/wasm32-wasip2/release/proof_bundle_verify.wasm
 wasm-tools validate target/wasm32-wasip2/release/proof_bundle_verify.wasm
-normalized_dir="$(mktemp -d)"
-trap 'rm -rf "$normalized_dir"' EXIT
-wasm-tools strip \
+wasm-tools validate proof_bundle_verify.wasm
+abi_dir="$(mktemp -d)"
+trap 'rm -rf "$abi_dir"' EXIT
+wasm-tools component wit \
   target/wasm32-wasip2/release/proof_bundle_verify.wasm \
-  -o "$normalized_dir/built.wasm"
-wasm-tools strip proof_bundle_verify.wasm -o "$normalized_dir/committed.wasm"
-cmp "$normalized_dir/built.wasm" "$normalized_dir/committed.wasm"
+  >"$abi_dir/built.wit"
+wasm-tools component wit proof_bundle_verify.wasm >"$abi_dir/committed.wit"
+cmp "$abi_dir/built.wit" "$abi_dir/committed.wit"
 grep -Eq '^name = "proof-bundle-verify"$' manifest.toml
 grep -Eq '^capabilities = \["tool"\]$' manifest.toml
 grep -Eq '^permissions = \[\]$' manifest.toml
 wasm_path="$(sed -n 's/^wasm_path = "\(.*\)"$/\1/p' manifest.toml)"
 test -n "$wasm_path"
 test -f "$wasm_path"
-component_wit="$(wasm-tools component wit proof_bundle_verify.wasm)"
+component_wit="$(cat "$abi_dir/committed.wit")"
 grep -q 'export zeroclaw:plugin/plugin-info@0.1.0' <<<"$component_wit"
 grep -q 'export zeroclaw:plugin/tool@0.1.0' <<<"$component_wit"
 if grep -Eq 'wasi:http|wasi:sockets|zeroclaw:plugin/sockets' <<<"$component_wit"; then

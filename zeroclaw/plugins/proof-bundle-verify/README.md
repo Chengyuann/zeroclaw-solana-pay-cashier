@@ -37,8 +37,10 @@ zeroclaw plugin list
 Tool name: `verify_cashier_proof_bundle`.
 
 The repository commits the built WASM component. CI rebuilds it with the
-pinned Rust toolchain, validates the Component Model ABI, strips non-semantic
-custom metadata, and byte-compares it with the committed artifact.
+pinned Rust toolchain, runs the same public fixtures on Linux and macOS,
+validates both Component Model binaries, and compares their complete WIT
+import/export ABI. Raw bytes are not compared across operating systems because
+LLVM code generation and producer metadata are platform-specific.
 
 Input:
 
