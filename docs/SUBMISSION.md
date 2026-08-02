@@ -100,7 +100,7 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 
 - GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
 - Public demo: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
-- Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.1.0`
+- Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
 - Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
 - Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
@@ -133,7 +133,8 @@ Verified on August 2, 2026:
 - ZeroClaw `v0.8.3` skill audit passes.
 - `payment-watch` and `refund-approval` SOP validation passes.
 - GitHub Release `v1.0.0` is public and contains the demo video delivery.
-- GitHub Release `v1.1.0` is public and links the complete proof console.
+- GitHub Release `v1.2.0` is public and contains the Rust/WASM verifier,
+  example proof bundle, and checksums.
 - GitHub Pages deployment is public, HTTPS-only, and passes desktop/mobile
   static snapshot QA.
 

@@ -7,8 +7,8 @@ witnesses, and the owner receives a tamper-evident receipt or an exception.
 
 The agent never holds a private key and never signs a transaction.
 
-The latest console release is published on the GitHub
-[v1.1.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.1.0).
+The latest security and verifier release is published on the GitHub
+[v1.2.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0).
 The formal 73-second showcase and its QA package remain on
 [v1.0.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
 Remotion source and the storyboard live under [`video/`](video/).
@@ -361,6 +361,10 @@ Expected:
 - 22 TypeScript behavior, proof-integrity, console-server, and safety tests
   pass.
 - 6 Rust proof-verifier tests pass.
+- Public-network quorum rejects duplicate RPC endpoints and requires
+  independent HTTPS sources.
+- The committed Rust/WASM verifier component passes ABI, permission, and
+  cross-language fixture checks.
 - Console static assets and manifest are present.
 - Production dependency audit reports zero vulnerabilities.
 - Native proof verifier plugin host tests and `wasm32-wasip2` build pass in CI.
