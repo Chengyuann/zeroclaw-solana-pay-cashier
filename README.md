@@ -7,8 +7,10 @@ witnesses, and the owner receives a tamper-evident receipt or an exception.
 
 The agent never holds a private key and never signs a transaction.
 
-The formal 73-second showcase and its QA package are published on the GitHub
-[v1.0.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
+The latest console release is published on the GitHub
+[v1.1.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.1.0).
+The formal 73-second showcase and its QA package remain on
+[v1.0.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
 Remotion source and the storyboard live under [`video/`](video/).
 
 ## Why this exists
