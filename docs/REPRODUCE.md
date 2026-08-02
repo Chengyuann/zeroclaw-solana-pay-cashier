@@ -18,6 +18,10 @@ Open `http://127.0.0.1:4317/`. The server defaults to loopback and reads
 `.state/`; use `CASHIER_STATE_DIR` only when reproducing against another local
 state directory.
 
+A sanitized read-only snapshot is also published at:
+
+`https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
+
 ## 2. Install ZeroClaw
 
 Use the current official release:

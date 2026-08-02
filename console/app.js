@@ -10,6 +10,7 @@ let detailRequestId = 0;
 let loadRequestId = 0;
 let autoRefreshTimer = null;
 let loadInFlight = false;
+const staticMode = window.__CASHIER_STATIC__ === true;
 
 const rows = document.querySelector("#invoice-rows");
 const detail = document.querySelector("#detail");
@@ -23,7 +24,10 @@ const siteHeader = document.querySelector(".site-header");
 const menuToggle = document.querySelector("#menu-toggle");
 const siteNav = document.querySelector("#site-nav");
 const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-autoRefreshInput.checked = readPreference("cashier-auto-refresh") !== "false";
+autoRefreshInput.checked =
+  !staticMode && readPreference("cashier-auto-refresh") !== "false";
+autoRefreshInput.disabled = staticMode;
+if (staticMode) autoRefreshInput.closest(".auto-refresh").title = "Static snapshot";
 
 refreshButton.addEventListener("click", () => load());
 searchInput.addEventListener("input", event => {
@@ -123,12 +127,17 @@ async function load({ silent = false } = {}) {
   }
 
   try {
-    const response = await fetch("/api/invoices", { cache: "no-store" });
+    const response = await fetch(
+      staticMode ? assetUrl("static/invoices/index.json") : "/api/invoices",
+      { cache: "no-store" },
+    );
     if (!response.ok) throw new Error(`Ledger returned ${response.status}`);
     const body = await response.json();
     if (requestId !== loadRequestId) return;
     invoices = body.invoices.map(normalizeInvoice);
-    generatedAt.textContent = `Ledger live · ${formatClock(body.generatedAt)}`;
+    generatedAt.textContent = staticMode
+      ? `Static snapshot · ${formatDateTime(body.generatedAt)}`
+      : `Ledger live · ${formatClock(body.generatedAt)}`;
     renderMetrics();
 
     if (!selectedId || !invoices.some(invoice => invoice.id === selectedId)) {
@@ -355,9 +364,10 @@ async function inspectInvoice(id) {
 async function fetchProof(invoice) {
   if (!invoice?.paymentId || !invoice?.offerHash) return null;
   try {
-    const response = await fetch(`/api/proof/${encodeURIComponent(invoice.id)}`, {
-      cache: "no-store",
-    });
+    const proofPath = staticMode
+      ? assetUrl(`static/proof/${encodeURIComponent(invoice.id)}.json`)
+      : `/api/proof/${encodeURIComponent(invoice.id)}`;
+    const response = await fetch(proofPath, { cache: "no-store" });
     return response.ok ? await response.json() : null;
   } catch {
     return null;
@@ -564,7 +574,7 @@ function renderQr(invoice) {
   if (!invoice.qrPath) return "";
   return `
     <div class="qr-wrap">
-      <img src="/qr/${encodeURIComponent(invoice.qrPath)}" alt="Solana Pay invoice QR code" />
+      <img src="${escapeAttribute(assetUrl(`qr/${encodeURIComponent(invoice.qrPath)}`))}" alt="Solana Pay invoice QR code" />
       <div>
         <h4>Unsigned payment request</h4>
         <p>The wallet previews and signs. The agent has no private key and cannot move funds.</p>
@@ -750,6 +760,10 @@ function setText(id, value) {
   if (element) element.textContent = String(value);
 }
 
+function assetUrl(pathname) {
+  return new URL(pathname.replace(/^\/+/, ""), document.baseURI).toString();
+}
+
 function setMenuOpen(open, returnFocus = false) {
   const wasOpen = siteHeader.classList.contains("menu-open");
   siteHeader.classList.toggle("menu-open", open);
@@ -764,7 +778,7 @@ function scheduleAutoRefresh() {
     window.clearInterval(autoRefreshTimer);
     autoRefreshTimer = null;
   }
-  if (!autoRefreshInput.checked || document.hidden) return;
+  if (staticMode || !autoRefreshInput.checked || document.hidden) return;
   autoRefreshTimer = window.setInterval(() => {
     void load({ silent: true });
   }, 30_000);

@@ -16,12 +16,15 @@
     "console:start": "bash scripts/console-start.sh",
     "console:stop": "bash scripts/console-stop.sh",
     "console:status": "bash scripts/console-status.sh",
+    "pages:snapshot": "npm run build && node scripts/export-public-snapshot.mjs",
+    "pages:build": "node scripts/build-pages.mjs",
+    "pages:check": "node scripts/check-pages.mjs",
     "devnet": "tsx src/devnet-payer.ts",
     "start": "node dist/cli.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run build && npm test",
-    "check:console": "test -f console/favicon.ico && test -f console/site.webmanifest && test -f console/assets/cashier-logo.jpg && test -f console/assets/runway-human-signature.jpg && command -v screen >/dev/null && bash -n scripts/console-start.sh scripts/console-stop.sh scripts/console-status.sh"
+    "check:console": "test -f console/favicon.ico && test -f console/site.webmanifest && test -f console/assets/cashier-logo.jpg && test -f console/assets/runway-human-signature.jpg && test -f console/demo-data/invoices/index.json && command -v screen >/dev/null && bash -n scripts/console-start.sh scripts/console-stop.sh scripts/console-status.sh"
   },
   "dependencies": {
     "@solana-program/memo": "^0.11.0",

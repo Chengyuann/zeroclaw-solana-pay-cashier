@@ -117,6 +117,23 @@ npm run console:status
 npm run console:start
 ```
 
+Public read-only snapshot:
+
+`https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
+
+The Pages version uses a committed, sanitized evidence snapshot. It contains
+public transaction evidence and signed proof bundles, but no payment URLs,
+active QR requests, local filesystem paths, refund approval codes, or write
+API.
+
+Refresh the public snapshot after changing demo state:
+
+```bash
+npm run pages:snapshot
+npm run pages:build
+npm run pages:check
+```
+
 The console provides:
 
 - ledger search, state filters, network filters, and sorting;

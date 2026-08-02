@@ -1,0 +1,34 @@
+{
+  "proof": {
+    "version": "zc-proof-bundle-v1",
+    "offer": {
+      "version": "zc-offer-v1",
+      "paymentId": "pay_d32961f66ed2495686a792d214481f43",
+      "invoiceId": "d32961f6-6ed2-4956-86a7-92d214481f43",
+      "orderId": "recording-rehearsal",
+      "recipient": "BpegjqEbijzZMxFaseiCd6iv1DM3LuL3273NJVyzFmy1",
+      "amount": "0.001",
+      "asset": "SOL",
+      "mint": null,
+      "reference": "bHobnXFc1JjxKdX9jG47APKnt2Yk76qkiW7rUYvUsuS",
+      "memo": "recording-rehearsal",
+      "cluster": "localnet",
+      "createdAt": "2026-07-25T07:31:20.514Z",
+      "expiresAt": "2026-07-25T07:46:20.514Z"
+    },
+    "offerHash": "8eeff18088fe061113b71b8c6afa48ca5f59c28266ebcc3b8bd9b85cc7bb7226",
+    "offerAttestation": {
+      "algorithm": "Ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAUm3aD4FwR+8+dcR3Bz0OpUVbuxBA/nCI+8Uueh+287E=",
+      "signature": "xTB0iF1cFULwEwVT9SSFyHgAoeQVabkLowGLW1IoZSrLhcUvLsnLhgRqOD3eUm9NZW1tDjRYG2EwiqMzyapWAA==",
+      "signedHash": "8eeff18088fe061113b71b8c6afa48ca5f59c28266ebcc3b8bd9b85cc7bb7226"
+    }
+  },
+  "verification": {
+    "valid": true,
+    "offerHashValid": true,
+    "settlementHashValid": null,
+    "offerAttestationValid": true,
+    "settlementAttestationValid": null
+  }
+}

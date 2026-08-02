@@ -97,6 +97,7 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 ## Links to provide
 
 - GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
+- Public demo: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
 - Release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
 - Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
@@ -108,6 +109,10 @@ The operator must configure a reachable Solana RPC. The project reports RPC outa
 The console is intentionally local-first and does not add authentication or
 remote write APIs. Bind it to loopback unless it is placed behind an
 authenticated operator gateway.
+
+The public GitHub Pages demo is a sanitized, read-only evidence snapshot. It
+does not expose payment URLs, active QR requests, local paths, refund approval
+codes, or mutation APIs.
 
 ## Verification status
 

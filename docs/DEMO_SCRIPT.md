@@ -107,7 +107,7 @@ Show:
 
 Finish on:
 
-- 12 tests passed;
+- 14 tests passed;
 - ZeroClaw skill audit passed;
 - two SOPs valid;
 - repository URL;

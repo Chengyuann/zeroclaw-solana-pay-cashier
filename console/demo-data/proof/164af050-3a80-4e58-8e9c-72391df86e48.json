@@ -1,0 +1,59 @@
+{
+  "proof": {
+    "version": "zc-proof-bundle-v1",
+    "offer": {
+      "version": "zc-offer-v1",
+      "paymentId": "pay_164af0503a804e588e9c72391df86e48",
+      "invoiceId": "164af050-3a80-4e58-8e9c-72391df86e48",
+      "orderId": "proof-console-demo",
+      "recipient": "BpegjqEbijzZMxFaseiCd6iv1DM3LuL3273NJVyzFmy1",
+      "amount": "0.001",
+      "asset": "SOL",
+      "mint": null,
+      "reference": "4RTTQGjFWEPjGGYNnpFoiCHMkqdMeTmhHStW1iGH2xUj",
+      "memo": "proof-console-demo",
+      "cluster": "devnet",
+      "createdAt": "2026-07-24T17:46:25.076Z",
+      "expiresAt": "2026-07-24T18:01:25.076Z"
+    },
+    "offerHash": "228ef7265f4d5176c667c5b1d42f5ea191c3539c2e29a35fe1d6cc7a7732b8d7",
+    "offerAttestation": {
+      "algorithm": "Ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAUm3aD4FwR+8+dcR3Bz0OpUVbuxBA/nCI+8Uueh+287E=",
+      "signature": "2xKx2lvFYCU7IaNNlNTv75h8vRykwnsXk2EfkwzRZUjTKj/fNfYu6z9vBBTZtutwgX3lxdTbZSE805uHvKqtDQ==",
+      "signedHash": "228ef7265f4d5176c667c5b1d42f5ea191c3539c2e29a35fe1d6cc7a7732b8d7"
+    },
+    "settlement": {
+      "version": "zc-settlement-v1",
+      "paymentId": "pay_164af0503a804e588e9c72391df86e48",
+      "offerHash": "228ef7265f4d5176c667c5b1d42f5ea191c3539c2e29a35fe1d6cc7a7732b8d7",
+      "signature": "SIMULATED_CONSOLE_PROOF",
+      "outcome": "simulated",
+      "anomalies": [],
+      "expectedAmount": 0.001,
+      "observedAmount": 0.001,
+      "signatureCount": 1,
+      "witnessQuorum": {
+        "required": 0,
+        "valid": 0,
+        "agreed": true
+      },
+      "witnesses": [],
+      "verifiedAt": "2026-07-24T17:46:25.216Z",
+      "proofHash": "ff49e25eb2e10e116695837d52eca260044a6902fb081970a60919676235f850"
+    },
+    "settlementAttestation": {
+      "algorithm": "Ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAUm3aD4FwR+8+dcR3Bz0OpUVbuxBA/nCI+8Uueh+287E=",
+      "signature": "sZiR0gpG9xdwksxBcy3h9wKatyCVd8etKtdAJV3CWQgmjBmxzW3cl4oWBS3WtQktz2WhugRaa3HTRLGuuP5mBw==",
+      "signedHash": "ff49e25eb2e10e116695837d52eca260044a6902fb081970a60919676235f850"
+    }
+  },
+  "verification": {
+    "valid": true,
+    "offerHashValid": true,
+    "settlementHashValid": true,
+    "offerAttestationValid": true,
+    "settlementAttestationValid": true
+  }
+}

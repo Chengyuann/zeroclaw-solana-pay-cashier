@@ -27,6 +27,9 @@ jobs:
       - name: Verify console assets
         run: npm run check:console
 
+      - name: Build public console
+        run: npm run pages:build && npm run pages:check
+
       - name: Dependency audit
         run: npm audit --omit=dev
 

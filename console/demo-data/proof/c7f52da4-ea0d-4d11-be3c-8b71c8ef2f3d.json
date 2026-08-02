@@ -1,0 +1,75 @@
+{
+  "proof": {
+    "version": "zc-proof-bundle-v1",
+    "offer": {
+      "version": "zc-offer-v1",
+      "paymentId": "pay_c7f52da4ea0d4d11be3c8b71c8ef2f3d",
+      "invoiceId": "c7f52da4-ea0d-4d11-be3c-8b71c8ef2f3d",
+      "orderId": "showcase-live-153923",
+      "recipient": "BpegjqEbijzZMxFaseiCd6iv1DM3LuL3273NJVyzFmy1",
+      "amount": "0.001",
+      "asset": "SOL",
+      "mint": null,
+      "reference": "13gHeZNzX2MkAB1LiGxMkK7SUrA38NZ1pjFAqhRZ84uo",
+      "memo": "showcase-live-153923",
+      "cluster": "localnet",
+      "createdAt": "2026-07-25T07:39:49.189Z",
+      "expiresAt": "2026-07-25T07:54:49.189Z"
+    },
+    "offerHash": "d50b66cd6ee6d6c8180885dc64fd175e778ca33de1199d1fe7ec28523f2d5f84",
+    "offerAttestation": {
+      "algorithm": "Ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAUm3aD4FwR+8+dcR3Bz0OpUVbuxBA/nCI+8Uueh+287E=",
+      "signature": "Z3lfQ1CiRXg4f4P9PSjpkL0fIIuOVU8c7rFSZ+fNF5YETCKlNPVNwJtSSLIarBwwucTi4A6qQkJWJHMyyOLdBw==",
+      "signedHash": "d50b66cd6ee6d6c8180885dc64fd175e778ca33de1199d1fe7ec28523f2d5f84"
+    },
+    "settlement": {
+      "version": "zc-settlement-v1",
+      "paymentId": "pay_c7f52da4ea0d4d11be3c8b71c8ef2f3d",
+      "offerHash": "d50b66cd6ee6d6c8180885dc64fd175e778ca33de1199d1fe7ec28523f2d5f84",
+      "signature": "25qGfBVfRt8qvpeAexz8ojqRLqpABKqwSxvU5zb3eXrLTRwYgcuQwuBoY3S6WxDEHGeNHCF512QBpexkBZav1DsJ",
+      "outcome": "accepted",
+      "anomalies": [],
+      "witnessQuorum": {
+        "required": 1,
+        "valid": 1,
+        "agreed": true
+      },
+      "expectedAmount": 0.001,
+      "observedAmount": 0.001,
+      "signatureCount": 1,
+      "witnesses": [
+        {
+          "name": "local-validator",
+          "rpcUrl": "http://127.0.0.1:8899",
+          "genesisHash": "GzSqtdh9nF29wxjNkEm5u61CeSGgd5Mu3mh8cMTDs1Bv",
+          "signature": "25qGfBVfRt8qvpeAexz8ojqRLqpABKqwSxvU5zb3eXrLTRwYgcuQwuBoY3S6WxDEHGeNHCF512QBpexkBZav1DsJ",
+          "slot": "323",
+          "blockTime": "2026-07-25T07:39:57.000Z",
+          "transactionDigest": "87140a75c6e92c66a9744c04eae7a600ada648299e487f8713a027d17a80ecaa",
+          "transactionSucceeded": true,
+          "referencePresent": true,
+          "recipientPresent": true,
+          "mintMatches": true,
+          "memoMatches": true,
+          "observedAmount": 0.001
+        }
+      ],
+      "verifiedAt": "2026-07-25T07:40:01.037Z",
+      "proofHash": "1494be75408493ff09b21e5ece7e1016bc5319a555d57d4de259edbdf11310ac"
+    },
+    "settlementAttestation": {
+      "algorithm": "Ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAUm3aD4FwR+8+dcR3Bz0OpUVbuxBA/nCI+8Uueh+287E=",
+      "signature": "P7jro7hpr7u9o+DVwv42PK1tB4LtW0EUJnwY3j46DoX8VZaznIscPaqpggM5kxx6xu9lEEvTn9Heb/L1MvWVAA==",
+      "signedHash": "1494be75408493ff09b21e5ece7e1016bc5319a555d57d4de259edbdf11310ac"
+    }
+  },
+  "verification": {
+    "valid": true,
+    "offerHashValid": true,
+    "settlementHashValid": true,
+    "offerAttestationValid": true,
+    "settlementAttestationValid": true
+  }
+}
