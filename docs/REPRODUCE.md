@@ -8,6 +8,16 @@ npm run check
 npm run demo
 ```
 
+Start the local proof console in a separate terminal:
+
+```bash
+npm run console
+```
+
+Open `http://127.0.0.1:4317/`. The server defaults to loopback and reads
+`.state/`; use `CASHIER_STATE_DIR` only when reproducing against another local
+state directory.
+
 ## 2. Install ZeroClaw
 
 Use the current official release:

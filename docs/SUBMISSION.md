@@ -47,8 +47,13 @@ Refunds remain non-custodial. Customer messages can create a request, but only t
 - Dual-RPC witness evidence and quorum.
 - Payment ID, expiry, replay/duplicate detection, and merchant exception queue.
 - Approval-gated refund state machine.
+- Searchable proof console with offer, settlement, witness, and raw bundle
+  inspection.
+- Portable proof JSON export, pending-invoice QR display, and automatic ledger
+  refresh.
+- Original GPT Image 2 brand mark and proof-evidence visual studies.
 - ZeroClaw skill and two validated SOPs.
-- Deterministic demo and behavior tests.
+- Deterministic demo and 14 automated behavior, proof, server, and safety tests.
 
 ## Custody tier
 
@@ -81,6 +86,7 @@ Observed result:
 ```bash
 npm install
 npm run check
+npm run console
 npm run demo
 zeroclaw skills audit ./zeroclaw/skills/solana-pay-cashier
 zeroclaw sop validate
@@ -90,10 +96,36 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 
 ## Links to provide
 
-- GitHub: `<repository URL>`
-- Demo video: `<video URL>`
-- Showcase post: `<ZeroClaw Discord #solana-bounty URL>`
+- GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
+- Release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
+- Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
+- Showcase post: add the permanent ZeroClaw Discord `#solana-bounty` message
+  URL after publishing.
 
 ## Known limitation
 
 The operator must configure a reachable Solana RPC. The project reports RPC outages separately and never mislabels them as a successful or valid payment.
+
+The console is intentionally local-first and does not add authentication or
+remote write APIs. Bind it to loopback unless it is placed behind an
+authenticated operator gateway.
+
+## Verification status
+
+Verified on August 2, 2026:
+
+- TypeScript build and all 14 automated tests pass.
+- Production dependency audit reports zero vulnerabilities.
+- Console server integration tests cover static assets, API responses, proof
+  bundles, security headers, HEAD requests, traversal rejection, and method
+  rejection.
+- Desktop, 390px mobile, keyboard tab navigation, reduced motion, lazy image
+  loading, mobile navigation, and horizontal-overflow checks pass.
+- ZeroClaw `v0.8.3` skill audit passes.
+- `payment-watch` and `refund-approval` SOP validation passes.
+- GitHub Release `v1.0.0` is public and contains the demo video delivery.
+
+Remaining external action:
+
+- publish the final ZeroClaw Discord `#solana-bounty` showcase message and add
+  its permanent URL above.

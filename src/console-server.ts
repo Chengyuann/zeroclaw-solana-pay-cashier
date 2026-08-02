@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 import { createServer } from "node:http";
+import type { Server } from "node:http";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 import { proofBundle, verifyProofBundle } from "./proof.js";
@@ -13,15 +15,20 @@ const root = path.resolve(process.env.CASHIER_STATE_DIR ?? ".state");
 const store = new JsonStore(root);
 const publicDir = path.resolve("console");
 
-const server = createServer(async (request, response) => {
+export function createConsoleServer(
+  stateRoot = root,
+  staticRoot = publicDir,
+): Server {
+  const stateStore = new JsonStore(stateRoot);
+  return createServer(async (request, response) => {
   try {
     const url = new URL(request.url ?? "/", `http://${request.headers.host}`);
-    if (request.method !== "GET") {
-      sendJson(response, 405, { error: "GET required" });
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      sendJson(response, 405, { error: "GET or HEAD required" });
       return;
     }
     if (url.pathname === "/api/invoices") {
-      const invoices = await store.listInvoices();
+      const invoices = await stateStore.listInvoices();
       sendJson(response, 200, {
         generatedAt: new Date().toISOString(),
         invoices: invoices.map(invoice => ({
@@ -34,7 +41,11 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname.startsWith("/api/proof/")) {
       const id = decodeURIComponent(url.pathname.slice("/api/proof/".length));
-      const proof = proofBundle(await store.loadInvoice(id));
+      if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id)) {
+        sendJson(response, 400, { error: "invalid invoice id" });
+        return;
+      }
+      const proof = proofBundle(await stateStore.loadInvoice(id));
       sendJson(response, 200, {
         proof,
         verification: verifyProofBundle(proof),
@@ -43,24 +54,28 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname.startsWith("/qr/")) {
       const file = path.basename(url.pathname);
-      const body = await readFile(path.join(store.qrDir, file));
-      response.writeHead(200, {
+      const body = await readFile(path.join(stateStore.qrDir, file));
+      response.writeHead(200, withSecurityHeaders({
         "content-type": "image/png",
         "cache-control": "no-store",
-      });
-      response.end(body);
+      }));
+      response.end(request.method === "HEAD" ? undefined : body);
       return;
     }
 
-    const file =
-      url.pathname === "/" ? "index.html" : path.basename(url.pathname);
-    const body = await readFile(path.join(publicDir, file));
-    response.writeHead(200, {
+    const relativeFile =
+      url.pathname === "/" ? "index.html" : decodeURIComponent(url.pathname).replace(/^\/+/, "");
+    const file = path.resolve(staticRoot, relativeFile);
+    if (file !== staticRoot && !file.startsWith(`${staticRoot}${path.sep}`)) {
+      sendJson(response, 404, { error: "not found" });
+      return;
+    }
+    const body = await readFile(file);
+    response.writeHead(200, withSecurityHeaders({
       "content-type": contentType(file),
-      "cache-control": "no-store",
-      "x-content-type-options": "nosniff",
-    });
-    response.end(body);
+      "cache-control": cacheControl(file),
+    }));
+    response.end(request.method === "HEAD" ? undefined : body);
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       sendJson(response, 404, { error: "not found" });
@@ -70,27 +85,58 @@ const server = createServer(async (request, response) => {
       error: error instanceof Error ? error.message : String(error),
     });
   }
-});
+  });
+}
 
-server.listen(port, host, () => {
-  process.stdout.write(`Cashier console: http://${host}:${port}\n`);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  createConsoleServer().listen(port, host, () => {
+    process.stdout.write(`Cashier console: http://${host}:${port}\n`);
+  });
+}
 
 function sendJson(
   response: import("node:http").ServerResponse,
   status: number,
   body: unknown,
 ): void {
-  response.writeHead(status, {
+  response.writeHead(status, withSecurityHeaders({
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
-    "x-content-type-options": "nosniff",
-  });
+  }));
   response.end(`${JSON.stringify(body, null, 2)}\n`);
 }
 
 function contentType(file: string): string {
   if (file.endsWith(".css")) return "text/css; charset=utf-8";
   if (file.endsWith(".js")) return "text/javascript; charset=utf-8";
+  if (file.endsWith(".json") || file.endsWith(".webmanifest")) {
+    return "application/manifest+json; charset=utf-8";
+  }
+  if (file.endsWith(".ico")) return "image/x-icon";
+  if (file.endsWith(".jpg") || file.endsWith(".jpeg")) return "image/jpeg";
+  if (file.endsWith(".png")) return "image/png";
   return "text/html; charset=utf-8";
+}
+
+function cacheControl(file: string): string {
+  return file.endsWith(".html") || file.endsWith(".js") || file.endsWith(".css")
+    ? "no-store"
+    : "public, max-age=86400";
+}
+
+function withSecurityHeaders(
+  headers: Record<string, string>,
+): Record<string, string> {
+  return {
+    ...headers,
+    "content-security-policy":
+      "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+    "cross-origin-opener-policy": "same-origin",
+    "cross-origin-resource-policy": "same-origin",
+    "permissions-policy":
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "referrer-policy": "no-referrer",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+  };
 }

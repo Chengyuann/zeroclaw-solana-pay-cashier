@@ -1,0 +1,28 @@
+# Discord Showcase Post
+
+Paste this into ZeroClaw Discord `#solana-bounty`.
+
+```text
+**Proof-Carrying Cashier — ZeroClaw Solana Bounty**
+
+A non-custodial Solana Pay merchant workflow that creates immutable offers, validates settlement through independent RPC witnesses, and exports issuer-attested proof bundles that verify offline.
+
+**What is different**
+• Payment ID, expiry, unique reference, canonical offer hash
+• Ed25519 attestations over offer and settlement hashes
+• Dual-RPC devnet quorum / explicit local-validator evidence tier
+• Fail-closed queue for late, duplicate, underpaid, overpaid, invalid, or disputed payments
+• Approval-gated refunds; the human wallet remains the final signer
+• Searchable proof console with offer, witness, raw bundle, QR, and JSON export views
+
+**Security boundary:** T1 — no private keys, no agent signing, no autonomous refunds.
+
+**Verified:** 14 automated tests, zero production dependency vulnerabilities, ZeroClaw v0.8.3 skill audit passed, both SOPs validated.
+
+GitHub: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier
+Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0
+73-second demo: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4
+```
+
+After posting, copy the Discord message link and replace the placeholder in
+`docs/SUBMISSION.md`.

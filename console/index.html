@@ -3,64 +3,421 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A proof-carrying, non-custodial Solana Pay reconciliation console."
+    />
+    <meta name="theme-color" content="#111512" />
+    <meta name="color-scheme" content="light" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Proof-Carrying Cashier" />
+    <meta
+      property="og:description"
+      content="Settlement evidence, independent witnesses, and portable proof for Solana Pay merchants."
+    />
+    <meta property="og:image" content="/assets/proof-carrying-cashier.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <title>Proof-Carrying Cashier</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div>
-        <h1>Proof-Carrying Cashier</h1>
-        <p>Solana Pay reconciliation with issuer attestations and RPC witnesses</p>
-      </div>
-      <div class="status-block">
-        <span class="live-dot"></span>
-        <span id="generated-at">Loading ledger</span>
-      </div>
-    </header>
+    <a class="skip-link" href="#main-content">Skip to cashier console</a>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="#overview" aria-label="Proof-Carrying Cashier overview">
+          <span class="brand-mark logo-orbit" aria-hidden="true">
+            <img src="/assets/cashier-logo.jpg" alt="" width="384" height="384" decoding="async" />
+            <b></b>
+          </span>
+          <span class="brand-type">
+            <span>Proof-Carrying</span>
+            <strong>Cashier</strong>
+          </span>
+        </a>
 
-    <main>
-      <section class="metrics" aria-label="Ledger summary">
-        <div><strong id="metric-total">0</strong><span>Total</span></div>
-        <div><strong id="metric-pending">0</strong><span>Pending</span></div>
-        <div><strong id="metric-paid">0</strong><span>Paid</span></div>
-        <div><strong id="metric-attention">0</strong><span>Attention</span></div>
-      </section>
+        <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+          <a href="#overview" data-section-link="overview">Overview</a>
+          <a href="#ledger" data-section-link="ledger">Ledger</a>
+          <a href="#visuals" data-section-link="visuals">Visuals</a>
+          <a href="#method" data-section-link="method">Method</a>
+        </nav>
 
-      <section class="toolbar">
-        <div class="segments" role="tablist" aria-label="Invoice filter">
-          <button class="segment active" data-filter="all">All</button>
-          <button class="segment" data-filter="pending">Pending</button>
-          <button class="segment" data-filter="paid">Paid</button>
-          <button class="segment" data-filter="attention">Attention</button>
+        <div class="header-status">
+          <span class="live-state" aria-live="polite">
+            <i class="live-dot" aria-hidden="true"></i>
+            <span id="generated-at">Connecting</span>
+          </span>
+          <span class="tier-chip">T1 / Non-custodial</span>
+          <button
+            id="menu-toggle"
+            class="menu-toggle"
+            type="button"
+            aria-controls="site-nav"
+            aria-expanded="false"
+            aria-label="Open navigation"
+            title="Open navigation"
+          >
+            <i></i><i></i><i></i>
+          </button>
         </div>
-        <button id="refresh" class="icon-button" title="Refresh ledger" aria-label="Refresh ledger">
-          ↻
-        </button>
-      </section>
+        <span class="page-progress" aria-hidden="true"></span>
+      </header>
 
-      <section class="ledger">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Status</th>
-                <th>Amount</th>
-                <th>Payment ID</th>
-                <th>Proof</th>
-                <th>Witness</th>
-              </tr>
-            </thead>
-            <tbody id="invoice-rows"></tbody>
-          </table>
-        </div>
-        <aside id="detail" class="detail">
-          <div class="empty-detail">
-            <span>Select an invoice to inspect its proof bundle.</span>
+      <main id="main-content" tabindex="-1">
+        <section id="overview" class="overview-band">
+          <div class="evidence-runway" aria-hidden="true">
+            <div class="runway-row">
+              <div class="runway-track">
+                <div class="runway-group">
+                  <span class="runway-tile wide"><img src="/assets/runway-immutable-offer.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile square"><img src="/assets/cashier-receipt.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-wallet-payment.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile square"><img src="/assets/runway-witness-seal.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-offline-proof.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile mark"><img src="/assets/cashier-logo.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-fail-closed.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/witness-network-v2.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile square"><img src="/assets/runway-human-signature.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/settlement-poster-v2.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/proof-carrying-cashier.jpg" alt="" decoding="async" /></span>
+                </div>
+              </div>
+            </div>
+            <div class="runway-row reverse">
+              <div class="runway-track">
+                <div class="runway-group">
+                  <span class="runway-tile square"><img src="/assets/runway-human-signature.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile slim"><img src="/assets/witness-network.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/settlement-poster-v2.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile square"><img src="/assets/runway-witness-seal.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-wallet-payment.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile mark"><img src="/assets/cashier-logo.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-fail-closed.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile square"><img src="/assets/cashier-receipt.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-offline-proof.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/runway-immutable-offer.jpg" alt="" decoding="async" /></span>
+                  <span class="runway-tile wide"><img src="/assets/witness-network-v2.jpg" alt="" decoding="async" /></span>
+                </div>
+              </div>
+            </div>
           </div>
-        </aside>
-      </section>
-    </main>
+          <canvas class="star-field" aria-hidden="true"></canvas>
+          <div class="spotlight" aria-hidden="true"></div>
+          <div class="overview-copy reveal-on-scroll">
+            <p class="eyebrow">Merchant payment intelligence / Solana Pay</p>
+            <h1>
+              <span
+                class="decrypt-text"
+                data-decrypt-text="Settlement evidence,"
+                aria-label="Settlement evidence,"
+              >Settlement evidence,</span>
+              <em
+                class="decrypt-text"
+                data-decrypt-text="not payment claims."
+                aria-label="not payment claims."
+              >not payment claims.</em>
+            </h1>
+            <p class="overview-deck">
+              Every invoice carries immutable terms, independent chain evidence,
+              issuer attestations, and a proof bundle that verifies offline.
+            </p>
+
+            <div class="custody-line">
+              <span>Read-only console</span>
+              <span>No private keys</span>
+              <span>No autonomous refunds</span>
+              <span>Human wallet signs</span>
+            </div>
+
+            <ol class="system-rail" aria-label="Settlement proof workflow">
+              <li class="rail-step"><b>01</b><span>Offer</span><small>Canonical terms</small></li>
+              <li class="rail-step"><b>02</b><span>Payment</span><small>Wallet execution</small></li>
+              <li class="rail-step"><b>03</b><span>Witness</span><small>RPC observation</small></li>
+              <li class="rail-step"><b>04</b><span>Proof</span><small>Offline verification</small></li>
+            </ol>
+          </div>
+
+          <aside class="proof-snapshot glow-border reveal-on-scroll" aria-label="Latest accepted proof">
+            <img
+              class="snapshot-visual"
+              src="/assets/proof-carrying-cashier.jpg"
+              alt=""
+              aria-hidden="true"
+            />
+            <div class="snapshot-heading">
+              <p>Latest accepted proof</p>
+              <span id="snapshot-network" class="network-chip pulse-chip">Localnet</span>
+            </div>
+            <div class="snapshot-main">
+              <div id="snapshot-score" class="integrity-stamp" data-state="pending">
+                <span>Proof</span>
+                <strong>--</strong>
+                <small>checking</small>
+              </div>
+              <div class="snapshot-copy">
+                <h2 id="snapshot-order">Loading ledger</h2>
+                <p id="snapshot-amount">--</p>
+              </div>
+            </div>
+            <dl class="snapshot-data">
+              <div><dt>Proof hash</dt><dd id="snapshot-hash">--</dd></div>
+              <div><dt>Witness quorum</dt><dd id="snapshot-witness">--</dd></div>
+              <div><dt>Verified</dt><dd id="snapshot-time">--</dd></div>
+            </dl>
+          </aside>
+        </section>
+
+        <section class="metrics-strip" aria-label="Ledger summary">
+          <div class="metric reveal-on-scroll">
+            <span>Ledger entries</span>
+            <strong id="metric-total" data-count-value="0">0</strong>
+            <small>Immutable invoice records</small>
+          </div>
+          <div class="metric reveal-on-scroll">
+            <span>Settled volume</span>
+            <strong id="metric-volume" data-count-value="0">0 SOL</strong>
+            <small>Across paid invoices</small>
+          </div>
+          <div class="metric reveal-on-scroll">
+            <span>Proof coverage</span>
+            <strong id="metric-proof" data-count-value="0">0 / 0</strong>
+            <small>Paid receipts with bundles</small>
+          </div>
+          <div class="metric reveal-on-scroll">
+            <span>Open invoices</span>
+            <strong id="metric-pending" data-count-value="0">0</strong>
+            <small>Awaiting settlement</small>
+          </div>
+          <div class="metric reveal-on-scroll">
+            <span>Attention queue</span>
+            <strong id="metric-attention" data-count-value="0">0</strong>
+            <small>Fail-closed exceptions</small>
+          </div>
+        </section>
+
+        <section id="ledger" class="control-band">
+          <div class="section-heading reveal-on-scroll">
+            <div>
+              <span class="section-index">01</span>
+              <p class="eyebrow">Operations</p>
+              <h2>Settlement ledger</h2>
+            </div>
+            <p>
+              Scan invoice state, proof coverage, network evidence, and exceptions
+              from one operational surface.
+            </p>
+          </div>
+
+          <div class="toolbar reveal-on-scroll">
+            <label class="search-field beam-border">
+              <span class="sr-only">Search ledger</span>
+              <input
+                id="search"
+                type="search"
+                placeholder="Search order, payment ID, signature"
+                autocomplete="off"
+              />
+            </label>
+
+            <div class="segments" role="group" aria-label="Invoice filter">
+              <button class="segment active" type="button" data-filter="all" aria-pressed="true">All</button>
+              <button class="segment" type="button" data-filter="pending" aria-pressed="false">Pending</button>
+              <button class="segment" type="button" data-filter="paid" aria-pressed="false">Settled</button>
+              <button class="segment" type="button" data-filter="attention" aria-pressed="false">Attention</button>
+            </div>
+
+            <label class="select-field">
+              <span>Network</span>
+              <select id="cluster-filter">
+                <option value="all">All networks</option>
+                <option value="localnet">Agave localnet</option>
+                <option value="devnet">Solana devnet</option>
+                <option value="mainnet-beta">Solana mainnet</option>
+              </select>
+            </label>
+
+            <label class="select-field">
+              <span>Sort</span>
+              <select id="sort-order">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="amount">Amount</option>
+              </select>
+            </label>
+
+            <button
+              id="refresh"
+              class="icon-button magnetic-button"
+              type="button"
+              title="Refresh ledger"
+              aria-label="Refresh ledger"
+            >
+              ↻
+            </button>
+
+            <label class="auto-refresh">
+          <input id="auto-refresh" type="checkbox" checked />
+              <span>Auto</span>
+            </label>
+          </div>
+
+          <div class="control-layout">
+            <div class="ledger-panel reveal-on-scroll">
+              <div class="table-wrap">
+                <table>
+                  <caption class="sr-only">
+                    Settlement invoices with state, amount, network, evidence, and update time
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>Order</th>
+                      <th>State</th>
+                      <th>Amount</th>
+                      <th>Network</th>
+                      <th>Evidence</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoice-rows"></tbody>
+                </table>
+              </div>
+              <footer class="ledger-footer">
+                <span id="result-count">0 records</span>
+                <span>Click a row to inspect its portable evidence.</span>
+              </footer>
+            </div>
+
+            <aside
+              id="detail"
+              class="evidence-panel glow-border reveal-on-scroll"
+              aria-live="polite"
+              aria-busy="false"
+            >
+              <div class="empty-detail">
+                <span class="empty-index">Proof</span>
+                <h3>Select an invoice</h3>
+                <p>Offer terms, settlement evidence, witness checks, and raw proof data appear here.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="visuals" class="visual-archive">
+          <div class="section-heading">
+            <div>
+              <span class="section-index">02</span>
+              <p class="eyebrow">Proof atlas</p>
+              <h2>Evidence in physical form.</h2>
+            </div>
+            <p>
+              GPT Image 2 studies translate the cashier's custody boundary,
+              witness quorum, and portable receipt into inspectable visual artifacts.
+            </p>
+          </div>
+
+          <div class="visual-track">
+            <figure class="visual-feature reveal-on-scroll">
+              <div class="poster-frame spotlight-card">
+                <img
+                  src="/assets/settlement-poster-v2.jpg"
+                  alt="Editorial proof-carrying cashier poster showing a terminal, receipt, and evidence chain"
+                  width="1440"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="scan-line" aria-hidden="true"></span>
+              </div>
+              <figcaption>
+                <span>01 / Settlement evidence</span>
+                <strong>Proof leaves the operator's machine.</strong>
+              </figcaption>
+            </figure>
+
+            <figure class="visual-study visual-receipt reveal-on-scroll">
+              <div class="poster-frame spotlight-card">
+                <img
+                  src="/assets/cashier-receipt.jpg"
+                  alt="A receipt and payment terminal study for the non-custodial cashier"
+                  width="960"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="scan-line" aria-hidden="true"></span>
+              </div>
+              <figcaption>
+                <span>02 / Merchant receipt</span>
+                <strong>Terms exist before funds move.</strong>
+              </figcaption>
+            </figure>
+
+            <figure class="visual-study visual-network reveal-on-scroll">
+              <div class="poster-frame spotlight-card">
+                <img
+                  src="/assets/witness-network-v2.jpg"
+                  alt="Independent blockchain witness nodes converging on a portable proof artifact"
+                  width="1440"
+                  height="960"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="scan-line" aria-hidden="true"></span>
+              </div>
+              <figcaption>
+                <span>03 / Witness topology</span>
+                <strong>Chain state is observed, not claimed.</strong>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section id="method" class="method-band">
+          <div class="section-heading inverse">
+            <div>
+              <span class="section-index">03</span>
+              <p class="eyebrow">System model</p>
+              <h2>Proof before credit.</h2>
+            </div>
+            <p>
+              The product is positioned as merchant reconciliation infrastructure,
+              not another QR generator or autonomous payment agent.
+            </p>
+          </div>
+
+          <ol class="method-grid">
+            <li>
+              <b>01 / Immutable offer</b>
+              <h3>Terms exist before funds move.</h3>
+              <p>Payment ID, recipient, amount, memo, reference, expiry, offer hash, and issuer attestation.</p>
+            </li>
+            <li>
+              <b>02 / Independent witness</b>
+              <h3>Chain state is observed, not claimed.</h3>
+              <p>Recipient, amount, mint, memo, reference, slot, and transaction result are checked by RPC witnesses.</p>
+            </li>
+            <li>
+              <b>03 / Portable proof</b>
+              <h3>Evidence leaves the operator's machine.</h3>
+              <p>Offer and settlement hashes carry Ed25519 attestations and can be verified without local state.</p>
+            </li>
+            <li>
+              <b>04 / Human boundary</b>
+              <h3>Exceptions fail closed.</h3>
+              <p>Late, duplicate, invalid, disputed, or mismatched payments enter an attention queue. Refunds need approval.</p>
+            </li>
+          </ol>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Proof-Carrying Cashier</span>
+        <span>Solana Pay · ZeroClaw · T1 custody boundary</span>
+      </footer>
+    </div>
 
     <script type="module" src="/app.js"></script>
   </body>

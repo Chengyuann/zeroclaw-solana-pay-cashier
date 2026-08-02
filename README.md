@@ -8,7 +8,8 @@ witnesses, and the owner receives a tamper-evident receipt or an exception.
 The agent never holds a private key and never signs a transaction.
 
 The formal 73-second showcase and its QA package are published on the GitHub
-Release page. Remotion source and the storyboard live under [`video/`](video/).
+[v1.0.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
+Remotion source and the storyboard live under [`video/`](video/).
 
 ## Why this exists
 
@@ -84,6 +85,51 @@ npm run demo
 ```
 
 The demo uses temporary state and does not make a real payment.
+
+## Run the proof console
+
+The local reconciliation console reads the same `.state` invoice store as the
+CLI:
+
+```bash
+npm run console
+```
+
+Open `http://127.0.0.1:4317/`.
+
+For a background process that survives the current terminal session:
+
+```bash
+npm run console:start
+npm run console:status
+npm run console:stop
+```
+
+The managed commands use a detached macOS `screen` session named
+`zeroclaw-cashier-console` and keep logs under
+`.state/console-runtime/`.
+
+If the page stops opening after a terminal or Codex session exits, restart the
+managed session:
+
+```bash
+npm run console:status
+npm run console:start
+```
+
+The console provides:
+
+- ledger search, state filters, network filters, and sorting;
+- offer, proof, witness, and raw JSON inspection;
+- proof JSON export and copy controls;
+- unsigned QR display for pending invoices;
+- 30-second auto-refresh while the page is visible, with a user-controlled
+  toggle;
+- keyboard-operable invoice rows and evidence tabs;
+- reduced-motion behavior for all animated surfaces.
+
+The visual atlas and product mark were generated with GPT Image 2, optimized
+for local delivery, and do not require external image hosts.
 
 ## Create an invoice
 
@@ -259,6 +305,7 @@ zeroclaw/
   skills/         agent workflow instructions
   sops/           settlement watch and refund approval procedures
 docs/             threat model, network diagnosis, reproduction, submission, and video plan
+console/          proof ledger UI, local visual assets, favicon, and manifest
 ```
 
 ## Verification
@@ -270,7 +317,9 @@ npm run check
 Expected:
 
 - TypeScript build passes.
-- 12 behavior, proof-integrity, local-validator, and safety tests pass.
+- 14 behavior, proof-integrity, console-server, and safety tests pass.
+- Console static assets and manifest are present.
+- Production dependency audit reports zero vulnerabilities.
 - ZeroClaw skill audit passes.
 - Both SOPs validate under ZeroClaw `v0.8.3`.
 
