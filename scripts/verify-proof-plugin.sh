@@ -29,7 +29,13 @@ fi
 "$CARGO_BIN" build --locked --target wasm32-wasip2 --release
 test -f target/wasm32-wasip2/release/proof_bundle_verify.wasm
 wasm-tools validate target/wasm32-wasip2/release/proof_bundle_verify.wasm
-cmp target/wasm32-wasip2/release/proof_bundle_verify.wasm proof_bundle_verify.wasm
+normalized_dir="$(mktemp -d)"
+trap 'rm -rf "$normalized_dir"' EXIT
+wasm-tools strip \
+  target/wasm32-wasip2/release/proof_bundle_verify.wasm \
+  -o "$normalized_dir/built.wasm"
+wasm-tools strip proof_bundle_verify.wasm -o "$normalized_dir/committed.wasm"
+cmp "$normalized_dir/built.wasm" "$normalized_dir/committed.wasm"
 grep -Eq '^name = "proof-bundle-verify"$' manifest.toml
 grep -Eq '^capabilities = \["tool"\]$' manifest.toml
 grep -Eq '^permissions = \[\]$' manifest.toml
