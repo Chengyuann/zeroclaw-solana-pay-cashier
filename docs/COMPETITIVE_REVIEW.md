@@ -156,6 +156,53 @@ Risks:
 Lesson: threat models are strongest when they include residual risk and state
 what the evidence does not prove.
 
+### ChamaClaw
+
+Repository: `DouglasBagambe/ChamaClaw`
+
+Strongest evidence:
+
+- savings-group use case is concrete and socially legible;
+- real Telegram-to-ZeroClaw flow with a public devnet transaction;
+- SQLite ledger tracks paid, unpaid, and overdue members;
+- malicious refund and seed-phrase request is refused without a shell call;
+- separates the demo payer from the read-only cashier product.
+
+Risks:
+
+- repository GitHub Actions are red, though the project declares CircleCI as
+  its canonical CI;
+- proof portability and independent witness semantics are thinner;
+- no public product surface comparable to the proof console.
+
+Lesson: a familiar user group, real channel, and live devnet signature make a
+technically modest workflow easy for judges to understand.
+
+### BountyDesk and Payout Watchdog
+
+Repositories:
+
+- `xuechenrui/bounty-desk`
+- `jennhly/zeroclaw-solana-payout-watchdog`
+
+Strongest evidence:
+
+- each solves one narrow operator job: collect a bounty or confirm a payout;
+- BountyDesk includes a one-command offline valid-versus-injection demo and
+  green public CI;
+- Payout Watchdog demonstrates an authenticated ZeroClaw webhook and explicit
+  idempotent alert state;
+- both make fixture, local RPC, and live evidence labels difficult to confuse.
+
+Risks:
+
+- single-RPC trust is weaker than an independent witness quorum;
+- neither provides an issuer-attested offer-to-settlement proof chain;
+- public evaluator surfaces are primarily repository and video artifacts.
+
+Lesson: the fastest judging path is a concrete job plus one short command that
+proves both the success case and the fail-closed case.
+
 ## Direct cashier competitors
 
 Repositories such as the following implement variations of a T1 Solana Pay
@@ -201,7 +248,7 @@ Relative weaknesses:
 - the strongest live payment proof is local-validator, while some competitors
   show real mainnet funds;
 - the core is a skill/SOP and TypeScript service, not a native WASM plugin;
-- 22 TypeScript tests plus six Rust verifier tests remain fewer than the
+- 26 TypeScript tests plus six Rust verifier tests remain fewer than the
   largest Rust plugin submissions, but now cover bundle splicing,
   canonicalization, malformed input, witness disagreement, duplicate RPC
   endpoints, signed-but-contradictory claims, and cross-language verification;
@@ -244,4 +291,5 @@ trust boundaries, and complete delivery.
 5. Document two real operational bugs found under live conditions, including
    the corrective design change.
 6. Add an independent verification command that downloads one public snapshot
-   proof and verifies it from a clean directory.
+   proof and verifies it from a clean directory. Completed as
+   `npm run verify:public-proof`.

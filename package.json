@@ -19,6 +19,7 @@
     "pages:snapshot": "npm run build && node scripts/export-public-snapshot.mjs",
     "pages:build": "node scripts/build-pages.mjs",
     "pages:check": "node scripts/check-pages.mjs",
+    "verify:public-proof": "npm run build && node dist/public-proof-cli.js",
     "devnet": "tsx src/devnet-payer.ts",
     "start": "node dist/cli.js",
     "test": "vitest run",

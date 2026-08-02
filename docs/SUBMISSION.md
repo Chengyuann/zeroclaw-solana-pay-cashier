@@ -55,7 +55,7 @@ Refunds remain non-custodial. Customer messages can create a request, but only t
   ZeroClaw.
 - Original GPT Image 2 brand mark and proof-evidence visual studies.
 - ZeroClaw skill and two validated SOPs.
-- Deterministic demo, 22 TypeScript tests, and 6 Rust proof-verifier tests.
+- Deterministic demo, 26 TypeScript tests, and 6 Rust proof-verifier tests.
 
 ## Custody tier
 
@@ -100,6 +100,7 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 
 - GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
 - Public demo: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
+- One-command public proof check: `npm run verify:public-proof`
 - Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
 - Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
 - Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
@@ -122,7 +123,7 @@ codes, or mutation APIs.
 
 Verified on August 2, 2026:
 
-- TypeScript build and all 22 TypeScript tests pass.
+- TypeScript build and all 26 TypeScript tests pass.
 - All 6 Rust proof-verifier tests pass.
 - Proof verifier plugin host tests and `wasm32-wasip2` release build pass in CI.
 - Production dependency audit reports zero vulnerabilities.

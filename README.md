@@ -131,6 +131,17 @@ public transaction evidence and signed proof bundles, but no payment URLs,
 active QR requests, local filesystem paths, refund approval codes, or write
 API.
 
+Verify the latest accepted public proof from a clean checkout:
+
+```bash
+npm ci
+npm run verify:public-proof
+```
+
+The command downloads the public ledger and proof bundle, ignores the hosted
+verification verdict, recomputes every hash and Ed25519 attestation locally,
+checks offer-to-settlement linkage, and exits nonzero on any mismatch.
+
 Refresh the public snapshot after changing demo state:
 
 ```bash
@@ -358,7 +369,7 @@ ZEROCLAW_BIN=/path/to/zeroclaw bash scripts/verify.sh
 Expected:
 
 - TypeScript build passes.
-- 22 TypeScript behavior, proof-integrity, console-server, and safety tests
+- 26 TypeScript behavior, proof-integrity, console-server, and safety tests
   pass.
 - 6 Rust proof-verifier tests pass.
 - Public-network quorum rejects duplicate RPC endpoints and requires
