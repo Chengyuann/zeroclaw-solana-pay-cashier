@@ -24,5 +24,6 @@ Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/re
 73-second demo: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4
 ```
 
-After posting, copy the Discord message link and replace the placeholder in
-`docs/SUBMISSION.md`.
+Published:
+
+`https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`

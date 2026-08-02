@@ -99,8 +99,7 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 - GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
 - Release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
 - Demo video: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
-- Showcase post: add the permanent ZeroClaw Discord `#solana-bounty` message
-  URL after publishing.
+- Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
 
 ## Known limitation
 
@@ -125,7 +124,5 @@ Verified on August 2, 2026:
 - `payment-watch` and `refund-approval` SOP validation passes.
 - GitHub Release `v1.0.0` is public and contains the demo video delivery.
 
-Remaining external action:
-
-- publish the final ZeroClaw Discord `#solana-bounty` showcase message and add
-  its permanent URL above.
+The final ZeroClaw Discord `#solana-bounty` showcase message was published on
+August 2, 2026.
