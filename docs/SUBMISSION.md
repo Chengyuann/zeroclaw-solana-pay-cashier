@@ -102,9 +102,8 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 - Public demo: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
 - One-command public proof check: `npm run verify:public-proof`
 - Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
-- Director Cut video release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0`
 - Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
-- Director Cut demo: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-director-cut.mp4`
+- Published demo: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
 - Security update: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
 

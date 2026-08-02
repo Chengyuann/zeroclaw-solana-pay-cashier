@@ -203,6 +203,46 @@ Risks:
 Lesson: the fastest judging path is a concrete job plus one short command that
 proves both the success case and the fail-closed case.
 
+## Submission and website patterns
+
+The strongest visible Discord submissions consistently lead with:
+
+- one concrete user and job, usually phrased in plain language;
+- a short recorded run near the top of the post;
+- repository plus Explorer, release, or evidence links;
+- an explicit custody tier and statement of what the evidence does not prove;
+- one fast reproduction or verification path.
+
+Only a small minority of the reviewed posts expose a standalone site. Fiel and
+ProofKiosk benefit because that site makes the project easier to remember, not
+because Vercel is intrinsically stronger than GitHub Pages.
+
+Fiel's useful website patterns:
+
+- product and value proposition appear immediately;
+- interactive chat flow explains the real channel experience;
+- each plugin has one job and a visible custody tier;
+- live app, documentation, and source have distinct calls to action.
+
+ProofKiosk's useful website patterns:
+
+- the physical result is the first-viewport signal;
+- the end-to-end flow is numbered and replayable;
+- simulated page animation is explicitly separated from the recorded real run;
+- security attacks and fail-closed results are shown as inspectable cases;
+- reproduction is presented as a short path rather than a documentation index.
+
+Changes adopted by Proof-Carrying Cashier:
+
+- the public site now leads with the product name and cafe-owner scenario;
+- a judge review pack embeds the recorded demo and orders the review path;
+- GitHub, verifier release, Discord submission, public ledger, and the
+  one-command independent verifier are available from one section;
+- a static evidence strip exposes test count, key custody, proof-check count,
+  and public-network witness policy;
+- the signed local-validator evidence boundary remains explicit beside the
+  demo rather than being hidden in documentation.
+
 ## Direct cashier competitors
 
 Repositories such as the following implement variations of a T1 Solana Pay

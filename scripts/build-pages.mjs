@@ -1,4 +1,5 @@
-import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 
 const root = path.resolve(".");
@@ -20,15 +21,18 @@ await cp(path.join(root, "console"), outputDir, {
 
 const invoiceOutput = path.join(outputDir, "static", "invoices");
 const proofOutput = path.join(outputDir, "static", "proof");
+const mediaOutput = path.join(outputDir, "media");
 await Promise.all([
   mkdir(invoiceOutput, { recursive: true }),
   mkdir(proofOutput, { recursive: true }),
+  mkdir(mediaOutput, { recursive: true }),
 ]);
 
 await Promise.all([
   cp(path.join(snapshotDir, "invoices"), invoiceOutput, { recursive: true }),
   cp(path.join(snapshotDir, "proof"), proofOutput, { recursive: true }),
 ]);
+await stageDemoVideo(path.join(mediaOutput, "proof-carrying-cashier-demo.mp4"));
 
 const indexPath = path.join(outputDir, "index.html");
 const manifestPath = path.join(outputDir, "site.webmanifest");
@@ -84,4 +88,41 @@ function rewriteManifest(source) {
     src: `./${icon.src.replace(/^\/+/, "")}`,
   }));
   return `${JSON.stringify(body, null, 2)}\n`;
+}
+
+async function stageDemoVideo(destination) {
+  const localVideo = path.resolve(
+    process.env.CASHIER_DEMO_VIDEO_PATH ??
+      "outputs/video-delivery-v2/demo-video.mp4",
+  );
+  try {
+    await access(localVideo);
+    await cp(localVideo, destination);
+    return;
+  } catch {
+    // CI downloads the last public, QA-checked video when generated outputs are absent.
+  }
+
+  const source =
+    process.env.CASHIER_DEMO_VIDEO_URL ??
+    "https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4";
+  const expectedHash =
+    process.env.CASHIER_DEMO_VIDEO_SHA256 ??
+    "4c43e0f9d35131cb8952d7a4a86356fac9626502f2568feb5da4cd6472c7ebed";
+  const response = await fetch(source, {
+    redirect: "follow",
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!response.ok) {
+    throw new Error(`demo video download returned ${response.status}`);
+  }
+  const body = Buffer.from(await response.arrayBuffer());
+  if (body.length < 1_000_000 || body.length > 50_000_000) {
+    throw new Error(`demo video size is outside the accepted range: ${body.length}`);
+  }
+  const actualHash = createHash("sha256").update(body).digest("hex");
+  if (actualHash !== expectedHash) {
+    throw new Error(`demo video SHA-256 mismatch: ${actualHash}`);
+  }
+  await writeFile(destination, body);
 }

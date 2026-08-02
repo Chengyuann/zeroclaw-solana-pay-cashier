@@ -106,6 +106,11 @@ document.addEventListener("keydown", event => {
 document.addEventListener("pointerdown", event => {
   if (!siteHeader.contains(event.target)) setMenuOpen(false);
 });
+document.addEventListener("click", async event => {
+  const copyButton = event.target.closest("[data-review-copy]");
+  if (!copyButton) return;
+  await copyText(copyButton.dataset.copyValue, copyButton);
+});
 autoRefreshInput.addEventListener("change", () => {
   writePreference("cashier-auto-refresh", String(autoRefreshInput.checked));
   scheduleAutoRefresh();

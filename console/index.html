@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="A proof-carrying, non-custodial Solana Pay reconciliation console."
+      content="Proof-Carrying Cashier is a non-custodial ZeroClaw workflow for Solana Pay offers, settlement evidence, and independently verifiable proof."
     />
     <meta name="theme-color" content="#111512" />
     <meta name="color-scheme" content="light" />
@@ -13,7 +13,7 @@
     <meta property="og:title" content="Proof-Carrying Cashier" />
     <meta
       property="og:description"
-      content="Settlement evidence, independent witnesses, and portable proof for Solana Pay merchants."
+      content="A ZeroClaw merchant cashier with immutable offers, independent witnesses, and portable proof that verifies offline."
     />
     <meta property="og:image" content="/assets/proof-carrying-cashier.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -40,8 +40,8 @@
 
         <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
           <a href="#overview" data-section-link="overview">Overview</a>
+          <a href="#review" data-section-link="review">Review pack</a>
           <a href="#ledger" data-section-link="ledger">Ledger</a>
-          <a href="#visuals" data-section-link="visuals">Visuals</a>
           <a href="#method" data-section-link="method">Method</a>
         </nav>
 
@@ -107,28 +107,35 @@
           <canvas class="star-field" aria-hidden="true"></canvas>
           <div class="spotlight" aria-hidden="true"></div>
           <div class="overview-copy reveal-on-scroll">
-            <p class="eyebrow">Merchant payment intelligence / Solana Pay</p>
+            <p class="eyebrow">ZeroClaw × Solana Pay / T1 merchant workflow</p>
             <h1>
               <span
                 class="decrypt-text"
-                data-decrypt-text="Settlement evidence,"
-                aria-label="Settlement evidence,"
-              >Settlement evidence,</span>
+                data-decrypt-text="Proof-Carrying"
+                aria-label="Proof-Carrying"
+              >Proof-Carrying</span>
               <em
                 class="decrypt-text"
-                data-decrypt-text="not payment claims."
-                aria-label="not payment claims."
-              >not payment claims.</em>
+                data-decrypt-text="Cashier"
+                aria-label="Cashier"
+              >Cashier</em>
             </h1>
             <p class="overview-deck">
-              Every invoice carries immutable terms, independent chain evidence,
-              issuer attestations, and a proof bundle that verifies offline.
+              <strong>Settlement evidence, not payment claims.</strong>
+              A cafe owner can charge table 4 through ZeroClaw without handing
+              the agent a wallet key. Every offer and receipt carries evidence
+              another machine can verify.
             </p>
 
+            <div class="hero-actions" aria-label="Primary review actions">
+              <a class="command-button primary" href="#review">Start 5-minute review</a>
+              <a class="command-button secondary" href="#ledger">Inspect proof ledger</a>
+            </div>
+
             <div class="custody-line">
-              <span>Read-only console</span>
-              <span>No private keys</span>
-              <span>No autonomous refunds</span>
+              <span>26 TypeScript tests</span>
+              <span>6 Rust verifier tests</span>
+              <span>0 production vulnerabilities</span>
               <span>Human wallet signs</span>
             </div>
 
@@ -168,6 +175,150 @@
               <div><dt>Verified</dt><dd id="snapshot-time">--</dd></div>
             </dl>
           </aside>
+        </section>
+
+        <section id="review" class="review-band">
+          <div class="section-heading review-heading reveal-on-scroll">
+            <div>
+              <span class="section-index">00</span>
+              <p class="eyebrow">Judge review pack</p>
+              <h2>See the product, inspect the proof, verify it yourself.</h2>
+            </div>
+            <p>
+              Strong submissions make the trust path obvious. This route takes
+              roughly five minutes and separates recorded evidence, public proof,
+              and reproducible verification.
+            </p>
+          </div>
+
+          <div class="review-layout">
+            <div
+              class="review-feature spotlight-card reveal-on-scroll"
+            >
+              <video
+                class="review-video"
+                controls
+                playsinline
+                preload="metadata"
+                poster="/assets/proof-carrying-cashier.jpg"
+                aria-label="Narrated Proof-Carrying Cashier product demo"
+              >
+                <source
+                  src="/media/proof-carrying-cashier-demo.mp4"
+                  type="video/mp4"
+                />
+                <a href="/media/proof-carrying-cashier-demo.mp4">
+                  Open the narrated demo video.
+                </a>
+              </video>
+              <div class="review-feature-copy">
+                <small>01 / Recorded workflow</small>
+                <strong>Watch the narrated product demo.</strong>
+                <span>
+                  Real signed local-validator payment, clearly labeled localnet.
+                  <a
+                    href="/media/proof-carrying-cashier-demo.mp4"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Open MP4 ↗</a>
+                </span>
+              </div>
+            </div>
+
+            <ol class="review-steps reveal-on-scroll">
+              <li>
+                <b>01</b>
+                <div>
+                  <strong>Watch the workflow</strong>
+                  <span>Offer, signed payment, proof export, exceptions, and the human refund boundary.</span>
+                </div>
+              </li>
+              <li>
+                <b>02</b>
+                <div>
+                  <strong>Inspect one accepted proof</strong>
+                  <span>Open the offer, settlement, witness, and raw bundle in the public console.</span>
+                </div>
+              </li>
+              <li>
+                <b>03</b>
+                <div>
+                  <strong>Verify outside the website</strong>
+                  <span>The command ignores the hosted verdict and recomputes hashes and signatures locally.</span>
+                </div>
+              </li>
+              <li>
+                <b>04</b>
+                <div>
+                  <strong>Audit the implementation</strong>
+                  <span>Read the ZeroClaw skill, SOPs, threat model, tests, and permission-free WASM verifier.</span>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="review-links reveal-on-scroll" aria-label="Review resources">
+            <a href="#ledger">
+              <span>Public evidence</span>
+              <strong>Inspect accepted proof</strong>
+              <small>Offer + settlement + witness + raw JSON</small>
+            </a>
+            <a
+              href="https://github.com/Chengyuann/zeroclaw-solana-pay-cashier"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Source</span>
+              <strong>Open GitHub repository</strong>
+              <small>Skill, SOPs, TypeScript core, and Rust verifier</small>
+            </a>
+            <a
+              href="https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Release</span>
+              <strong>Download verifier assets</strong>
+              <small>WASM component, fixture, checksums</small>
+            </a>
+            <a
+              href="https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Submission</span>
+              <strong>Read the bounty post</strong>
+              <small>Product narrative and security update</small>
+            </a>
+          </div>
+
+          <div class="verify-command reveal-on-scroll">
+            <div>
+              <span>Independent verification</span>
+              <code>npm ci &amp;&amp; npm run verify:public-proof</code>
+            </div>
+            <button
+              class="command-button primary"
+              type="button"
+              data-review-copy
+              data-copy-value="npm ci && npm run verify:public-proof"
+            >
+              Copy command
+            </button>
+          </div>
+
+          <dl class="review-evidence reveal-on-scroll">
+            <div><dt>32</dt><dd>Automated tests<br /><small>26 TypeScript + 6 Rust</small></dd></div>
+            <div><dt>14</dt><dd>Public proof checks<br /><small>Ledger links + cryptographic validity</small></dd></div>
+            <div><dt>0</dt><dd>Keys held by agent<br /><small>No signing or autonomous refunds</small></dd></div>
+            <div><dt>2</dt><dd>Public-network witnesses<br /><small>Distinct HTTPS RPC endpoints</small></dd></div>
+          </dl>
+
+          <p class="evidence-disclosure reveal-on-scroll">
+            Evidence boundary: the published signed payment is a real Agave
+            local-validator transaction, not public devnet. Public devnet and
+            mainnet receipts require two distinct HTTPS RPC witnesses.
+          </p>
         </section>
 
         <section class="metrics-strip" aria-label="Ledger summary">

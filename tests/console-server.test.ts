@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import type { AddressInfo } from "node:net";
 import os from "node:os";
 import path from "node:path";
@@ -41,7 +41,9 @@ describe("cashier console server", () => {
       rpcUrl: "https://rpc-a.example",
       witnessRpcUrl: "https://rpc-b.example",
     });
-    const baseUrl = await startServer(stateRoot);
+    const mediaFile = path.join(stateRoot, "demo.mp4");
+    await writeFile(mediaFile, Buffer.from("0000ftypdemo-video"));
+    const baseUrl = await startServer(stateRoot, mediaFile);
 
     const page = await fetch(`${baseUrl}/`);
     expect(page.status).toBe(200);
@@ -86,6 +88,30 @@ describe("cashier console server", () => {
     expect(head.status).toBe(200);
     expect(head.headers.get("content-type")).toContain("text/css");
     expect(await head.text()).toBe("");
+
+    const media = await fetch(
+      `${baseUrl}/media/proof-carrying-cashier-demo.mp4`,
+      { headers: { range: "bytes=4-7" } },
+    );
+    expect(media.status).toBe(206);
+    expect(media.headers.get("content-type")).toBe("video/mp4");
+    expect(media.headers.get("content-range")).toBe("bytes 4-7/18");
+    expect(await media.text()).toBe("ftyp");
+
+    const suffix = await fetch(
+      `${baseUrl}/media/proof-carrying-cashier-demo.mp4`,
+      { headers: { range: "bytes=-4" } },
+    );
+    expect(suffix.status).toBe(206);
+    expect(suffix.headers.get("content-range")).toBe("bytes 14-17/18");
+    expect(await suffix.text()).toBe("ideo");
+
+    const invalidRange = await fetch(
+      `${baseUrl}/media/proof-carrying-cashier-demo.mp4`,
+      { headers: { range: "bytes=0-1,4-5" } },
+    );
+    expect(invalidRange.status).toBe(416);
+    expect(invalidRange.headers.get("content-range")).toBe("bytes */18");
   });
 
   it("rejects traversal and unsupported methods", async () => {
@@ -113,8 +139,15 @@ async function temporaryDirectory(prefix: string): Promise<string> {
   return directory;
 }
 
-async function startServer(stateRoot: string): Promise<string> {
-  const server = createConsoleServer(stateRoot, path.resolve("console"));
+async function startServer(
+  stateRoot: string,
+  mediaFile?: string,
+): Promise<string> {
+  const server = createConsoleServer(
+    stateRoot,
+    path.resolve("console"),
+    mediaFile,
+  );
   servers.push(server);
   await new Promise<void>((resolve, reject) => {
     server.once("error", reject);

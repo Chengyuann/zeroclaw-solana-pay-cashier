@@ -1,4 +1,4 @@
-import { readFile, readdir, stat } from "node:fs/promises";
+import { open, readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
 const pagesDir = path.resolve(process.env.CASHIER_PAGES_DIR ?? "dist/pages");
@@ -34,6 +34,39 @@ if (!Array.isArray(invoices.invoices) || invoices.invoices.length === 0) {
 }
 if (invoices.invoices.some(invoice => invoice.qrPath || invoice.paymentUrl)) {
   errors.push("public invoice snapshot contains payment request data");
+}
+
+const indexBody = await readFile(path.join(pagesDir, "index.html"), "utf8");
+const requiredReviewSignals = [
+  "Judge review pack",
+  "npm ci &amp;&amp; npm run verify:public-proof",
+  "github.com/Chengyuann/zeroclaw-solana-pay-cashier",
+  "releases/tag/v1.2.0",
+  "discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259",
+  "<video",
+  "proof-carrying-cashier-demo.mp4",
+];
+for (const signal of requiredReviewSignals) {
+  if (!indexBody.includes(signal)) {
+    errors.push(`public review pack is missing: ${signal}`);
+  }
+}
+
+const videoFile = path.join(
+  pagesDir,
+  "media",
+  "proof-carrying-cashier-demo.mp4",
+);
+const videoInfo = await stat(videoFile);
+if (videoInfo.size < 1_000_000 || videoInfo.size > 50_000_000) {
+  errors.push(`public demo video has unexpected size: ${videoInfo.size}`);
+}
+const videoHandle = await open(videoFile, "r");
+const videoHeader = Buffer.alloc(12);
+await videoHandle.read(videoHeader, 0, videoHeader.length, 0);
+await videoHandle.close();
+if (videoHeader.toString("ascii", 4, 8) !== "ftyp") {
+  errors.push("public demo video is not an MP4 file");
 }
 
 if (errors.length) {

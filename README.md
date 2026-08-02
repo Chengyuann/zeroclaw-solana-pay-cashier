@@ -9,11 +9,10 @@ The agent never holds a private key and never signs a transaction.
 
 The latest security and verifier release is published on the GitHub
 [v1.2.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0).
-The 75-second Director Cut showcase with transitions and updated proof
-verification is published on
-[v1.3.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0).
-The original evidence package remains on
+The published narrated showcase and evidence package remain on
 [v1.0.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
+The 75-second Director Cut and its QA package are prepared under
+`outputs/video-delivery-v2/` for the next release.
 Remotion source and the storyboard live under [`video/`](video/).
 
 ## Why this exists

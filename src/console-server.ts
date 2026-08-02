@@ -2,7 +2,8 @@
 
 import { createServer } from "node:http";
 import type { Server } from "node:http";
-import { readFile } from "node:fs/promises";
+import { createReadStream } from "node:fs";
+import { readFile, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -14,10 +15,15 @@ const port = Number(process.env.CASHIER_CONSOLE_PORT ?? "4317");
 const root = path.resolve(process.env.CASHIER_STATE_DIR ?? ".state");
 const store = new JsonStore(root);
 const publicDir = path.resolve("console");
+const demoVideo = path.resolve(
+  process.env.CASHIER_DEMO_VIDEO_PATH ??
+    "outputs/video-delivery-v2/demo-video.mp4",
+);
 
 export function createConsoleServer(
   stateRoot = root,
   staticRoot = publicDir,
+  demoVideoPath = demoVideo,
 ): Server {
   const stateStore = new JsonStore(stateRoot);
   return createServer(async (request, response) => {
@@ -60,6 +66,10 @@ export function createConsoleServer(
         "cache-control": "no-store",
       }));
       response.end(request.method === "HEAD" ? undefined : body);
+      return;
+    }
+    if (url.pathname === "/media/proof-carrying-cashier-demo.mp4") {
+      await sendMediaFile(request, response, demoVideoPath);
       return;
     }
 
@@ -115,6 +125,7 @@ function contentType(file: string): string {
   if (file.endsWith(".ico")) return "image/x-icon";
   if (file.endsWith(".jpg") || file.endsWith(".jpeg")) return "image/jpeg";
   if (file.endsWith(".png")) return "image/png";
+  if (file.endsWith(".mp4")) return "video/mp4";
   return "text/html; charset=utf-8";
 }
 
@@ -130,7 +141,7 @@ function withSecurityHeaders(
   return {
     ...headers,
     "content-security-policy":
-      "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-origin",
     "permissions-policy":
@@ -139,4 +150,59 @@ function withSecurityHeaders(
     "x-content-type-options": "nosniff",
     "x-frame-options": "DENY",
   };
+}
+
+async function sendMediaFile(
+  request: import("node:http").IncomingMessage,
+  response: import("node:http").ServerResponse,
+  file: string,
+): Promise<void> {
+  const info = await stat(file);
+  const rangeHeader = request.headers.range;
+  const range = rangeHeader?.match(/^bytes=(\d*)-(\d*)$/);
+  const suffixLength = range && !range[1] && range[2] ? Number(range[2]) : null;
+  const start =
+    suffixLength === null
+      ? range?.[1]
+        ? Number(range[1])
+        : 0
+      : Math.max(0, info.size - suffixLength);
+  const end =
+    suffixLength === null && range?.[2]
+      ? Number(range[2])
+      : info.size - 1;
+  if (
+    (rangeHeader && !range) ||
+    (range &&
+      (!Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      (suffixLength !== null &&
+        (!Number.isSafeInteger(suffixLength) || suffixLength <= 0)) ||
+      start < 0 ||
+      end < start ||
+      end >= info.size))
+  ) {
+    response.writeHead(416, withSecurityHeaders({
+      "content-range": `bytes */${info.size}`,
+    }));
+    response.end();
+    return;
+  }
+
+  const status = rangeHeader ? 206 : 200;
+  const headers = withSecurityHeaders({
+    "accept-ranges": "bytes",
+    "cache-control": "public, max-age=86400",
+    "content-length": String(end - start + 1),
+    "content-type": "video/mp4",
+    ...(rangeHeader
+      ? { "content-range": `bytes ${start}-${end}/${info.size}` }
+      : {}),
+  });
+  response.writeHead(status, headers);
+  if (request.method === "HEAD") {
+    response.end();
+    return;
+  }
+  createReadStream(file, { start, end }).pipe(response);
 }

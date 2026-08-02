@@ -10,6 +10,7 @@ rpc-relay/
 rpc-relay-pages/
 coverage/
 *.log
+.playwright-cli/
 outputs/
 video/remotion/node_modules/
 video/remotion/out/
