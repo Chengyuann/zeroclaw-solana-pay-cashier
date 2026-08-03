@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/qrcode": "^1.5.5",
+    "playwright": "^1.62.1",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"

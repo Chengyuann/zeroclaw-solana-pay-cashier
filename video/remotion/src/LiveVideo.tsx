@@ -21,11 +21,11 @@ const mono =
   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace";
 
 const sourceWindows = [
-  { src: "live-browser-demo.webm", start: 0, end: 9.5, label: "REAL BROWSER RECORDING" },
-  { src: "live-browser-demo.webm", start: 9.5, end: 20.4, label: "REAL BROWSER RECORDING" },
-  { src: "live-browser-demo.webm", start: 20.4, end: 32.4, label: "REAL BROWSER RECORDING" },
-  { src: "live-terminal.mp4", start: 2, end: 14, label: "REAL TERMINAL RECORDING" },
-  { src: "live-browser-demo.webm", start: 3.5, end: 13, label: "REAL BROWSER RECORDING" },
+  { src: "live-browser-demo.webm", start: 0, end: 11, label: "REAL BROWSER RECORDING" },
+  { src: "live-browser-demo.webm", start: 11, end: 16.5, label: "REAL BROWSER RECORDING" },
+  { src: "live-browser-demo.webm", start: 16.5, end: 32, label: "REAL BROWSER RECORDING" },
+  { src: "live-terminal.mp4", start: 1.5, end: 11.5, label: "REAL TERMINAL RECORDING" },
+  { src: "live-browser-demo.webm", start: 32.5, end: 37.7, label: "REAL BROWSER RECORDING" },
 ] as const;
 
 const RecordingScene: React.FC<{

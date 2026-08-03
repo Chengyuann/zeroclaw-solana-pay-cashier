@@ -111,7 +111,7 @@ async function stageDemoVideo(destination) {
     "https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4";
   const expectedHash =
     process.env.CASHIER_DEMO_VIDEO_SHA256 ??
-    "4c7f6f3184690526561e48f1a84bf0c3318e31d614118b282f875e0f973af7b3";
+    "54150b53f4d8bf8ef371ba9d455a87a3a71f43e873be6b50c7a58eab97554630";
   const response = await fetch(source, {
     redirect: "follow",
     signal: AbortSignal.timeout(30_000),
