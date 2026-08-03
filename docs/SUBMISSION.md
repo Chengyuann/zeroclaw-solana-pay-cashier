@@ -102,9 +102,10 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 - Public demo: `https://proof-carrying-cashier.pages.dev/`
 - GitHub Pages mirror: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
 - One-command public proof check: `npm run verify:public-proof`
-- Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
-- Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0`
+- Current review release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0`
+- Verifier assets release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
 - Published demo: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4`
+- Demo SHA-256: `54150b53f4d8bf8ef371ba9d455a87a3a71f43e873be6b50c7a58eab97554630`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
 - Security update: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
 
@@ -136,11 +137,15 @@ Verified on August 3, 2026:
 - ZeroClaw `v0.8.3` skill audit passes.
 - `payment-watch` and `refund-approval` SOP validation passes.
 - GitHub Release `v1.3.0` is public and contains the clean live walkthrough,
-  Director Cut, captions, and video QA.
+  Director Cut, captions, source bundle, video QA, and checksums.
 - GitHub Release `v1.2.0` is public and contains the Rust/WASM verifier,
   example proof bundle, and checksums.
-- GitHub Pages deployment is public, HTTPS-only, and passes desktop/mobile
-  static snapshot QA.
+- Cloudflare Pages and GitHub Pages are public, HTTPS-only, and serve the same
+  sanitized static snapshot.
+- The Release, Cloudflare Pages, and GitHub Pages copies of the primary MP4 are
+  byte-identical and have SHA-256
+  `54150b53f4d8bf8ef371ba9d455a87a3a71f43e873be6b50c7a58eab97554630`.
 
 The final ZeroClaw Discord `#solana-bounty` showcase message was published on
-August 2, 2026.
+August 2, 2026. A concise video-refresh reply is maintained in
+`docs/DISCORD_POST.md`.

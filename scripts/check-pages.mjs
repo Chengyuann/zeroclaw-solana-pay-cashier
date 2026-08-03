@@ -45,7 +45,7 @@ const requiredReviewSignals = [
   "Real browser + terminal recording",
   "npm ci &amp;&amp; npm run verify:public-proof",
   "github.com/Chengyuann/zeroclaw-solana-pay-cashier",
-  "releases/tag/v1.2.0",
+  "releases/tag/v1.3.0",
   "discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259",
   "<video",
   "proof-carrying-cashier-demo.mp4",

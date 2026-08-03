@@ -7,11 +7,12 @@ witnesses, and the owner receives a tamper-evident receipt or an exception.
 
 The agent never holds a private key and never signs a transaction.
 
-The latest security and verifier release is published on the GitHub
-[v1.2.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0).
-The clean browser-and-terminal walkthrough, Director Cut, captions, and video
-QA are published on
+The current judge review package is published on
 [v1.3.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0).
+It contains the clean browser-and-terminal walkthrough, Director Cut,
+captions, source bundle, QA reports, and checksums. The Rust/WASM verifier,
+example proof bundle, and verifier checksums remain available on
+[v1.2.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0).
 Remotion source and the storyboard live under [`video/`](video/).
 
 ## Why this exists

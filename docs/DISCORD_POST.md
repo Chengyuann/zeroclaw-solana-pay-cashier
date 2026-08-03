@@ -32,3 +32,20 @@ Published:
 Security update:
 
 `https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
+
+## Video Refresh Reply
+
+Post this as a reply to the published showcase message:
+
+```text
+**Demo video refresh**
+
+The primary v1.3.0 demo is now a clean 59-second full-product walkthrough: deployed Cloudflare site, judge review pack, proof/witness/raw evidence, and the independent terminal verifier ending with `verdict: valid`, `14/14`, and `PASS`.
+
+The capture contains no browser chrome, tabs, or unrelated pages. The Release, Cloudflare Pages, and GitHub Pages copies are byte-identical.
+
+Watch: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4
+Review site: https://proof-carrying-cashier.pages.dev/
+Release + QA: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0
+SHA-256: 54150b53f4d8bf8ef371ba9d455a87a3a71f43e873be6b50c7a58eab97554630
+```
