@@ -1,0 +1,57 @@
+[
+  {
+    "id": "live-01-public-site",
+    "title": "Public Cloudflare deployment",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "This is the deployed Proof-Carrying Cashier, running on its own Cloudflare Pages domain. The site states the T1 custody boundary, current test evidence, and the latest accepted proof.",
+    "visual": {
+      "kind": "recording",
+      "intent": "Independent public domain. Real product surface."
+    }
+  },
+  {
+    "id": "live-02-review",
+    "title": "Judge review path",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "The review pack puts the recorded workflow, public evidence, source, release, and independent verification in one place. Next, open the accepted settlement in the live proof ledger.",
+    "visual": {
+      "kind": "recording",
+      "intent": "Video, evidence, source, release, verification."
+    }
+  },
+  {
+    "id": "live-03-proof",
+    "title": "Inspect the proof",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "The proof view recomputes the offer hash, settlement hash, Ed25519 attestations, and linkage. The witness view exposes the recorded validator observation. Raw shows the portable signed bundle itself.",
+    "visual": {
+      "kind": "recording",
+      "intent": "Proof, witness, and raw signed artifact."
+    }
+  },
+  {
+    "id": "live-04-verify",
+    "title": "Verify outside the site",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "Now run the copied command outside the website. It downloads the Cloudflare proof, ignores the hosted verdict, and independently checks fourteen ledger and cryptographic conditions. The verifier exits zero.",
+    "visual": {
+      "kind": "terminal",
+      "intent": "14 of 14 checks. Exit zero."
+    }
+  },
+  {
+    "id": "live-05-close",
+    "title": "Evidence before trust",
+    "provider": "voxcpm",
+    "voice": "young-sunny-magnetic-male-en",
+    "voiceover": "This demo is a real browser and terminal recording. The signed payment evidence is localnet and labeled as such. Public-network receipts still require two distinct HTTPS RPC witnesses.",
+    "visual": {
+      "kind": "close",
+      "intent": "Real recording. Honest evidence boundary."
+    }
+  }
+]

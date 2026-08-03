@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration_seconds": 59.1,
+  "duration_frames": 1774,
+  "audio_mix": "public/live-audio/voiceover-bgm-mix.wav",
+  "background_music": {
+    "track_id": "running-up-that-hill-lofi-fruits-user-provided",
+    "path": "public/live-audio/bgm/running-up-that-hill-bed.wav",
+    "volume": 0.22,
+    "loop": true,
+    "fade_in_frames": 36,
+    "fade_out_frames": 51,
+    "license_manifest": "public/live-audio/bgm/source.json"
+  },
+  "scenes": [
+    {
+      "id": "live-01-public-site",
+      "title": "Public Cloudflare deployment",
+      "start_seconds": 0.0,
+      "end_seconds": 11.82,
+      "duration_seconds": 11.82,
+      "start_frame": 0,
+      "duration_frames": 355,
+      "voiceover": "This is the deployed Proof-Carrying Cashier, running on its own Cloudflare Pages domain. The site states the T1 custody boundary, current test evidence, and the latest accepted proof.",
+      "audio": "public/live-audio/live-01-public-site.wav",
+      "audio_duration_seconds": 11.52,
+      "padding_after_seconds": 0.3,
+      "captions": [
+        {
+          "text": "This is the deployed Proof-Carrying Cashier, running on its own Cloudflare Pages domain. The site states the T1 custody boundary, current test evidence, and the latest accepted proof.",
+          "start_seconds": 0.0,
+          "end_seconds": 11.52
+        }
+      ],
+      "visual": {
+        "kind": "recording",
+        "intent": "Independent public domain. Real product surface."
+      }
+    },
+    {
+      "id": "live-02-review",
+      "title": "Judge review path",
+      "start_seconds": 11.82,
+      "end_seconds": 22.2,
+      "duration_seconds": 10.38,
+      "start_frame": 355,
+      "duration_frames": 311,
+      "voiceover": "The review pack puts the recorded workflow, public evidence, source, release, and independent verification in one place. Next, open the accepted settlement in the live proof ledger.",
+      "audio": "public/live-audio/live-02-review.wav",
+      "audio_duration_seconds": 10.08,
+      "padding_after_seconds": 0.3,
+      "captions": [
+        {
+          "text": "The review pack puts the recorded workflow, public evidence, source, release, and independent verification in one place. Next, open the accepted settlement in the live proof ledger.",
+          "start_seconds": 11.82,
+          "end_seconds": 21.9
+        }
+      ],
+      "visual": {
+        "kind": "recording",
+        "intent": "Video, evidence, source, release, verification."
+      }
+    },
+    {
+      "id": "live-03-proof",
+      "title": "Inspect the proof",
+      "start_seconds": 22.2,
+      "end_seconds": 35.46,
+      "duration_seconds": 13.26,
+      "start_frame": 666,
+      "duration_frames": 398,
+      "voiceover": "The proof view recomputes the offer hash, settlement hash, Ed25519 attestations, and linkage. The witness view exposes the recorded validator observation. Raw shows the portable signed bundle itself.",
+      "audio": "public/live-audio/live-03-proof.wav",
+      "audio_duration_seconds": 12.96,
+      "padding_after_seconds": 0.3,
+      "captions": [
+        {
+          "text": "The proof view recomputes the offer hash, settlement hash, Ed25519 attestations, and linkage. The witness view exposes the recorded validator observation. Raw shows the portable signed bundle itself.",
+          "start_seconds": 22.200000000000003,
+          "end_seconds": 35.160000000000004
+        }
+      ],
+      "visual": {
+        "kind": "recording",
+        "intent": "Proof, witness, and raw signed artifact."
+      }
+    },
+    {
+      "id": "live-04-verify",
+      "title": "Verify outside the site",
+      "start_seconds": 35.46,
+      "end_seconds": 47.44,
+      "duration_seconds": 11.98,
+      "start_frame": 1064,
+      "duration_frames": 359,
+      "voiceover": "Now run the copied command outside the website. It downloads the Cloudflare proof, ignores the hosted verdict, and independently checks fourteen ledger and cryptographic conditions. The verifier exits zero.",
+      "audio": "public/live-audio/live-04-verify.wav",
+      "audio_duration_seconds": 11.68,
+      "padding_after_seconds": 0.3,
+      "captions": [
+        {
+          "text": "Now run the copied command outside the website. It downloads the Cloudflare proof, ignores the hosted verdict, and independently checks fourteen ledger and cryptographic conditions. The verifier exits zero.",
+          "start_seconds": 35.46000000000001,
+          "end_seconds": 47.14000000000001
+        }
+      ],
+      "visual": {
+        "kind": "terminal",
+        "intent": "14 of 14 checks. Exit zero."
+      }
+    },
+    {
+      "id": "live-05-close",
+      "title": "Evidence before trust",
+      "start_seconds": 47.44,
+      "end_seconds": 59.1,
+      "duration_seconds": 11.66,
+      "start_frame": 1423,
+      "duration_frames": 351,
+      "voiceover": "This demo is a real browser and terminal recording. The signed payment evidence is localnet and labeled as such. Public-network receipts still require two distinct HTTPS RPC witnesses.",
+      "audio": "public/live-audio/live-05-close.wav",
+      "audio_duration_seconds": 11.36,
+      "padding_after_seconds": 0.3,
+      "captions": [
+        {
+          "text": "This demo is a real browser and terminal recording. The signed payment evidence is localnet and labeled as such. Public-network receipts still require two distinct HTTPS RPC witnesses.",
+          "start_seconds": 47.44000000000001,
+          "end_seconds": 58.80000000000001
+        }
+      ],
+      "visual": {
+        "kind": "close",
+        "intent": "Real recording. Honest evidence boundary."
+      }
+    }
+  ]
+}

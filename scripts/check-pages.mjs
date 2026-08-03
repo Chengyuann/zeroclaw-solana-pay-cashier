@@ -42,6 +42,7 @@ if (/(?:href|src|poster|content)="\/(?!\/)/.test(indexBody)) {
 }
 const requiredReviewSignals = [
   "Judge review pack",
+  "Real browser + terminal recording",
   "npm ci &amp;&amp; npm run verify:public-proof",
   "github.com/Chengyuann/zeroclaw-solana-pay-cashier",
   "releases/tag/v1.2.0",

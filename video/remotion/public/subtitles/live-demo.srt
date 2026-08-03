@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:11,520
+This is the deployed Proof-Carrying Cashier, running on its own Cloudflare Pages domain. The site states the T1 custody boundary, current test evidence, and the latest accepted proof.
+
+2
+00:00:11,820 --> 00:00:21,900
+The review pack puts the recorded workflow, public evidence, source, release, and independent verification in one place. Next, open the accepted settlement in the live proof ledger.
+
+3
+00:00:22,200 --> 00:00:35,160
+The proof view recomputes the offer hash, settlement hash, Ed25519 attestations, and linkage. The witness view exposes the recorded validator observation. Raw shows the portable signed bundle itself.
+
+4
+00:00:35,460 --> 00:00:47,140
+Now run the copied command outside the website. It downloads the Cloudflare proof, ignores the hosted verdict, and independently checks fourteen ledger and cryptographic conditions. The verifier exits zero.
+
+5
+00:00:47,440 --> 00:00:58,800
+This demo is a real browser and terminal recording. The signed payment evidence is localnet and labeled as such. Public-network receipts still require two distinct HTTPS RPC witnesses.

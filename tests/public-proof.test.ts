@@ -3,12 +3,21 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { verifyLatestPublicProof } from "../src/public-proof.js";
+import {
+  DEFAULT_PUBLIC_CONSOLE_URL,
+  verifyLatestPublicProof,
+} from "../src/public-proof.js";
 import type { ProofBundle } from "../src/types.js";
 
 const fixtureRoot = path.resolve("console/demo-data");
 
 describe("public proof verification", () => {
+  it("uses the independent Cloudflare Pages deployment by default", () => {
+    expect(DEFAULT_PUBLIC_CONSOLE_URL).toBe(
+      "https://proof-carrying-cashier.pages.dev/",
+    );
+  });
+
   it("downloads and independently verifies the latest accepted public proof", async () => {
     const fetchImpl = fixtureFetch();
     const result = await verifyLatestPublicProof(

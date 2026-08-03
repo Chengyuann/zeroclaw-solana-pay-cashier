@@ -17,7 +17,7 @@ const store = new JsonStore(root);
 const publicDir = path.resolve("console");
 const demoVideo = path.resolve(
   process.env.CASHIER_DEMO_VIDEO_PATH ??
-    "outputs/video-delivery-v2/demo-video.mp4",
+    "outputs/video-delivery-live/demo-video.mp4",
 );
 
 export function createConsoleServer(

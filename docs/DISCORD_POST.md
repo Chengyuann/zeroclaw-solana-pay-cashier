@@ -17,11 +17,12 @@ A non-custodial Solana Pay merchant workflow that creates immutable offers, vali
 
 **Security boundary:** T1 — no private keys, no agent signing, no autonomous refunds.
 
-**Verified:** 26 TypeScript tests + 6 Rust verifier tests, zero production dependency vulnerabilities, ZeroClaw v0.8.3 skill audit passed, both SOPs validated. Judges can independently download and verify the latest public proof with `npm run verify:public-proof`.
+**Verified:** 27 TypeScript tests + 6 Rust verifier tests, zero production dependency vulnerabilities, ZeroClaw v0.8.3 skill audit passed, both SOPs validated. Judges can independently download and verify the latest public proof with `npm run verify:public-proof`.
 
 GitHub: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier
-Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0
-Published demo: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4
+Public site: https://proof-carrying-cashier.pages.dev/
+Release + evidence: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0
+Published demo: https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4
 ```
 
 Published:

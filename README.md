@@ -9,10 +9,9 @@ The agent never holds a private key and never signs a transaction.
 
 The latest security and verifier release is published on the GitHub
 [v1.2.0 Release page](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0).
-The published narrated showcase and evidence package remain on
-[v1.0.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0).
-The 75-second Director Cut and its QA package are prepared under
-`outputs/video-delivery-v2/` for the next release.
+The clean browser-and-terminal walkthrough, Director Cut, captions, and video
+QA are published on
+[v1.3.0](https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0).
 Remotion source and the storyboard live under [`video/`](video/).
 
 ## Why this exists
@@ -124,11 +123,19 @@ npm run console:status
 npm run console:start
 ```
 
-Public read-only snapshot:
+The local console serves the primary live walkthrough from
+`outputs/video-delivery-live/demo-video.mp4`. Override it with
+`CASHIER_DEMO_VIDEO_PATH` when reviewing another cut.
+
+Primary public read-only snapshot:
+
+`https://proof-carrying-cashier.pages.dev/`
+
+GitHub Pages mirror:
 
 `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
 
-The Pages version uses a committed, sanitized evidence snapshot. It contains
+Both static deployments use the same committed, sanitized evidence snapshot. It contains
 public transaction evidence and signed proof bundles, but no payment URLs,
 active QR requests, local filesystem paths, refund approval codes, or write
 API.
@@ -371,7 +378,7 @@ ZEROCLAW_BIN=/path/to/zeroclaw bash scripts/verify.sh
 Expected:
 
 - TypeScript build passes.
-- 26 TypeScript behavior, proof-integrity, console-server, and safety tests
+- 27 TypeScript behavior, proof-integrity, console-server, and safety tests
   pass.
 - 6 Rust proof-verifier tests pass.
 - Public-network quorum rejects duplicate RPC endpoints and requires

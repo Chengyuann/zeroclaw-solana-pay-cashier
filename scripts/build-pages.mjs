@@ -96,7 +96,7 @@ function rewriteManifest(source) {
 async function stageDemoVideo(destination) {
   const localVideo = path.resolve(
     process.env.CASHIER_DEMO_VIDEO_PATH ??
-      "outputs/video-delivery-v2/demo-video.mp4",
+      "outputs/video-delivery-live/demo-video.mp4",
   );
   try {
     await access(localVideo);
@@ -108,10 +108,10 @@ async function stageDemoVideo(destination) {
 
   const source =
     process.env.CASHIER_DEMO_VIDEO_URL ??
-    "https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4";
+    "https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4";
   const expectedHash =
     process.env.CASHIER_DEMO_VIDEO_SHA256 ??
-    "4c43e0f9d35131cb8952d7a4a86356fac9626502f2568feb5da4cd6472c7ebed";
+    "4c7f6f3184690526561e48f1a84bf0c3318e31d614118b282f875e0f973af7b3";
   const response = await fetch(source, {
     redirect: "follow",
     signal: AbortSignal.timeout(30_000),

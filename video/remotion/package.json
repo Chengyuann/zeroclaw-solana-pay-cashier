@@ -2,6 +2,7 @@
   "scripts": {
     "studio": "remotion studio --no-open",
     "render": "remotion render src/index.ts DemoVideo out/final.mp4",
+    "render:live": "remotion render src/index.ts LiveDemoVideo out/live-final.mp4",
     "still": "remotion still src/index.ts DemoVideo out/still.png --frame=0",
     "qa:encoded-scenes": "python3 scripts/qa_encoded_scenes.py",
     "typecheck": "tsc --noEmit"

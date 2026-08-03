@@ -55,7 +55,7 @@ Refunds remain non-custodial. Customer messages can create a request, but only t
   ZeroClaw.
 - Original GPT Image 2 brand mark and proof-evidence visual studies.
 - ZeroClaw skill and two validated SOPs.
-- Deterministic demo, 26 TypeScript tests, and 6 Rust proof-verifier tests.
+- Deterministic demo, 27 TypeScript tests, and 6 Rust proof-verifier tests.
 
 ## Custody tier
 
@@ -99,11 +99,12 @@ See `docs/REPRODUCE.md` for the real devnet flow.
 ## Links to provide
 
 - GitHub: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier`
-- Public demo: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
+- Public demo: `https://proof-carrying-cashier.pages.dev/`
+- GitHub Pages mirror: `https://chengyuann.github.io/zeroclaw-solana-pay-cashier/`
 - One-command public proof check: `npm run verify:public-proof`
 - Latest release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.2.0`
-- Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.0.0`
-- Published demo: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.0.0/proof-carrying-cashier-demo.mp4`
+- Video evidence release: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/tag/v1.3.0`
+- Published demo: `https://github.com/Chengyuann/zeroclaw-solana-pay-cashier/releases/download/v1.3.0/proof-carrying-cashier-live-demo.mp4`
 - Showcase post: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533401462900789259`
 - Security update: `https://discord.com/channels/1472154792351760419/1527427886410109029/1533426538542797002`
 
@@ -121,9 +122,9 @@ codes, or mutation APIs.
 
 ## Verification status
 
-Verified on August 2, 2026:
+Verified on August 3, 2026:
 
-- TypeScript build and all 26 TypeScript tests pass.
+- TypeScript build and all 27 TypeScript tests pass.
 - All 6 Rust proof-verifier tests pass.
 - Proof verifier plugin host tests and `wasm32-wasip2` release build pass in CI.
 - Production dependency audit reports zero vulnerabilities.
@@ -134,7 +135,8 @@ Verified on August 2, 2026:
   loading, mobile navigation, and horizontal-overflow checks pass.
 - ZeroClaw `v0.8.3` skill audit passes.
 - `payment-watch` and `refund-approval` SOP validation passes.
-- GitHub Release `v1.0.0` is public and contains the demo video delivery.
+- GitHub Release `v1.3.0` is public and contains the clean live walkthrough,
+  Director Cut, captions, and video QA.
 - GitHub Release `v1.2.0` is public and contains the Rust/WASM verifier,
   example proof bundle, and checksums.
 - GitHub Pages deployment is public, HTTPS-only, and passes desktop/mobile

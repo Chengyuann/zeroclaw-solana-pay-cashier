@@ -2,7 +2,7 @@ import { verifyProofBundleValue } from "./proof.js";
 import type { ProofBundle } from "./types.js";
 
 export const DEFAULT_PUBLIC_CONSOLE_URL =
-  "https://chengyuann.github.io/zeroclaw-solana-pay-cashier/";
+  "https://proof-carrying-cashier.pages.dev/";
 
 const MAX_PUBLIC_JSON_BYTES = 2 * 1024 * 1024;
 
